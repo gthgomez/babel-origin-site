@@ -1,0 +1,12 @@
+{
+  "name": "babel-origin-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Public-safe static origin site for the Babel demo and proof surfaces.",
+  "scripts": {
+    "build": "npm run check && node scripts/build-public.cjs",
+    "check": "node scripts/check-site.cjs",
+    "dev": "node scripts/serve.cjs"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Babel is an experimental prompt-stack validation CLI prototype with public-safe proof links and a bounded demo preview.">
+    <title>Babel | Prompt-Stack Validation CLI Prototype</title>
+    <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Babel origin home">
+        <span class="brand-mark">B</span>
+        <span>
+          <strong>Babel</strong>
+          <small>prompt-stack validation</small>
+        </span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#proof">Proof</a>
+        <a href="#limits">Limits</a>
+        <a href="demo/index.html">Demo</a>
+        <a href="https://github.com/gthgomez/Babel">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Experimental CLI prototype</p>
+          <h1>Babel validates and previews prompt stacks before model execution.</h1>
+          <p class="lede">
+            A public-safe origin for the Babel demo: catalog-backed instruction-stack previews,
+            typed CLI diagnostics, and honest proof links without production-autonomy claims.
+          </p>
+          <div class="actions" aria-label="Primary actions">
+            <a class="button primary" href="demo/index.html">Open Demo Preview</a>
+            <a class="button secondary" href="https://github.com/gthgomez/Babel">View Public Repo</a>
+          </div>
+        </div>
+        <figure class="terminal-figure">
+          <img src="assets/babel-terminal-proof.png" alt="Terminal-style proof card showing Babel check results">
+          <figcaption>Dated proof should stay tied to current local verification.</figcaption>
+        </figure>
+      </section>
+
+      <section id="proof" class="band">
+        <div class="section-heading">
+          <p class="eyebrow">Current proof posture</p>
+          <h2>What can be shown today</h2>
+        </div>
+        <div class="proof-grid">
+          <article>
+            <span class="status pass">Pass</span>
+            <h3>TypeScript typecheck</h3>
+            <p>Local CLI typecheck passed in the current investigation.</p>
+          </article>
+          <article>
+            <span class="status pass">Pass</span>
+            <h3>Catalog validation</h3>
+            <p>Local catalog validation passed with current entries and zero warnings/errors.</p>
+          </article>
+          <article>
+            <span class="status pass">4/4</span>
+            <h3>Lite usability benchmark</h3>
+            <p>`bl ask`, `bl plan`, `bl fix`, and patch compatibility scenarios passed.</p>
+          </article>
+          <article>
+            <span class="status warn">23/24</span>
+            <h3>Product benchmark</h3>
+            <p>One release-readiness gate is still blocked by workspace doctor state.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="limits" class="split">
+        <div>
+          <p class="eyebrow">What it is</p>
+          <h2>A reviewer-readable Babel story</h2>
+          <p>
+            Babel is a catalog-driven CLI/control-plane prototype. Its safest public story is
+            validation, preview, diagnostics, and evidence discipline for prompt/instruction stacks.
+          </p>
+        </div>
+        <div class="limits-list" aria-label="Limitations">
+          <p><strong>Not:</strong> operational agent infrastructure.</p>
+          <p><strong>Not:</strong> a broad autonomous coding-agent reliability claim.</p>
+          <p><strong>Not:</strong> a fixed catalog-count claim without fresh dated evidence.</p>
+          <p><strong>Next:</strong> fix doctor red gates, refresh public export, then deploy a preview.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Babel origin site</span>
+      <a href="https://github.com/gthgomez/Babel">github.com/gthgomez/Babel</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+.server.pid
+.vercel/
+public/
+HARDENING_PLAN.md
+
+.vercel

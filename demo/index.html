@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bounded Babel demo preview for prompt-stack validation CLI surfaces.">
+    <title>Babel Demo Preview</title>
+    <link rel="stylesheet" href="../assets/site.css">
+    <script src="../assets/site.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="Babel origin home">
+        <span class="brand-mark">B</span>
+        <span>
+          <strong>Babel Demo</strong>
+          <small>bounded preview</small>
+        </span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="../index.html#proof">Proof</a>
+        <a href="https://github.com/gthgomez/Babel">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero compact">
+        <div class="hero-copy">
+          <p class="eyebrow">Demo preview</p>
+          <h1>Four daily Babel lanes, shown without pretending they are production proof.</h1>
+          <p class="lede">
+            This page links the origin site to a safer demo story: read-only ask,
+            no-edit plan, verified small-fix intent, and workspace health diagnostics.
+          </p>
+        </div>
+        <figure class="terminal-figure">
+          <img src="../assets/babel-terminal-proof.png" alt="Terminal proof card for Babel demo checks">
+          <figcaption>Replace this with live dated output only after public export is refreshed.</figcaption>
+        </figure>
+      </section>
+
+      <section class="band">
+        <div class="command-grid" role="list">
+          <button class="command-card active" type="button" data-command="ask" role="listitem">
+            <span>bl ask</span>
+            <strong>Read-only inspection</strong>
+          </button>
+          <button class="command-card" type="button" data-command="plan" role="listitem">
+            <span>bl plan</span>
+            <strong>No-edit planning</strong>
+          </button>
+          <button class="command-card" type="button" data-command="fix" role="listitem">
+            <span>bl fix</span>
+            <strong>Verified edit lane</strong>
+          </button>
+          <button class="command-card" type="button" data-command="doctor" role="listitem">
+            <span>babel doctor</span>
+            <strong>Workspace health</strong>
+          </button>
+        </div>
+        <pre class="demo-output" id="demo-output" aria-live="polite">bl ask "Why is this failing?"
+
+status: read_only
+changed_files: none
+next: inspect evidence, then choose plan or fix</pre>
+      </section>
+    </main>
+
+    <footer>
+      <span>Demo route: /demo</span>
+      <a href="../index.html">Origin</a>
+      <a href="https://github.com/gthgomez/Babel">Public repo</a>
+    </footer>
+  </body>
+</html>
