@@ -21,3 +21,8 @@ The local server prints a `localhost` URL. Vercel can use:
 - Use [https://github.com/gthgomez/Babel](https://github.com/gthgomez/Babel) as the public proof repo.
 - Use `/demo/` as the bounded demo preview route.
 - Do not claim production readiness, autonomous coding-agent reliability, fixed catalog counts, or live provider governance unless fresh public evidence exists.
+
+## License
+
+This site repository is publicly viewable as a Babel demo and proof surface. It is not open source. See [LICENSE.md](LICENSE.md) for permitted use. Babel and other third-party materials retain their own licenses.
+
