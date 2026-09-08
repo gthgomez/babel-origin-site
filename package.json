@@ -8,5 +8,5 @@
     "check": "node scripts/check-site.cjs",
     "dev": "node scripts/serve.cjs"
   },
-  "license": "MIT"
+  "license": "UNLICENSED"
 }
