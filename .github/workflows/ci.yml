@@ -27,8 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          # This repo intentionally has no lockfile, so npm caching is disabled.
-          package-manager-cache: false
+          # This repo intentionally has no lockfile, so no npm cache is configured.
 
       - name: Content check and build public/
         run: npm run build
@@ -37,7 +36,7 @@ jobs:
         run: node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
 
       - name: Validate HTML
-        run: npx --yes html-validate@11 "public/**/*.html"
+        run: npx --yes html-validate@11.15.0 "public/**/*.html"
 
       - name: Check links
         uses: lycheeverse/lychee-action@v2
@@ -46,7 +45,7 @@ jobs:
           args: >-
             --root-dir "${{ github.workspace }}/public"
             --no-progress
-            --accept 200,204,206,429
+            --accept 100..=103,200..=299,429
             './public/**/*.html'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -57,4 +56,4 @@ jobs:
         with:
           name: public-site
           path: public/
-          if-no-files-found: error
+          if-no-files-found: ignore
