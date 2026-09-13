@@ -24,5 +24,5 @@ The local server prints a `localhost` URL. Vercel can use:
 
 ## License
 
-This site repository is publicly viewable as a Babel demo and proof surface. It is not open source. See [LICENSE.md](LICENSE.md) for permitted use. Babel and other third-party materials retain their own licenses.
+This site repository is publicly viewable as a Babel demo and proof surface. It is not open source. See [LICENSE](LICENSE) for permitted use. Babel and other third-party materials retain their own licenses.
 
