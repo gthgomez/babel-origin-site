@@ -2,6 +2,10 @@
 
 Public-safe static Vercel origin for Babel. This is a front door for the public repo and bounded demo preview, not a production agent surface.
 
+> **Status: proprietary.** This repository is public for source visibility and
+> transparency. It is **not open source** — there is no license grant to reuse,
+> modify, or redistribute this code. See [LICENSE](LICENSE).
+
 ## Local Use
 
 ```powershell
