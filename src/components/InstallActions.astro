@@ -12,7 +12,10 @@ interface Props {
 const { snapshot } = Astro.props;
 const actions = getInstallActions(snapshot);
 const realActions = actions.filter((a) => a.kind === "source" || a.notice === null);
-const unavailable = snapshot.distributions.filter((d) => d.kind !== "source" && d.availability !== "available");
+const unavailable = snapshot.distributions.filter(
+  (d: { kind: string; availability: string }) =>
+    d.kind !== "source" && d.availability !== "available"
+);
 ---
 <div class="actions" aria-label="Install Babel">
   {realActions.map((action) =>
@@ -25,7 +28,7 @@ const unavailable = snapshot.distributions.filter((d) => d.kind !== "source" && 
 </div>
 {unavailable.length > 0 && (
   <ul class="install-notices">
-    {unavailable.map((dist) => (
+    {unavailable.map((dist: { label: string; reason?: string; signingState: string; availability: string }) => (
       <li>
         <strong>{dist.label}:</strong> {dist.reason ?? "Not yet published."}
         {dist.signingState === "unsigned" && dist.availability === "available" && (
