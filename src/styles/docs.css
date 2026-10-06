@@ -5,11 +5,11 @@
   --sl-color-bg-sidebar: var(--bg, #0e1014);
   --sl-color-bg-accent: var(--panel-raised, #1d232c);
   --sl-color-text: var(--text, #f3f1ec);
-  --sl-color-text-accent: var(--cyan, #78c6d8);
+  --sl-color-text-accent: var(--accent, #4da3ff);
   --sl-color-text-muted: var(--muted, #a9b1bd);
   --sl-color-border: var(--border, #2a313c);
-  --sl-color-accent: var(--gold, #d7b45f);
-  --sl-color-accent-high: var(--gold-strong, #e6c572);
+  --sl-color-accent: var(--accent, #4da3ff);
+  --sl-color-accent-high: var(--accent-strong, #7cbcff);
   --sl-color-white: var(--text, #f3f1ec);
   --sl-color-gray-1: var(--text, #f3f1ec);
   --sl-color-gray-2: var(--muted, #a9b1bd);

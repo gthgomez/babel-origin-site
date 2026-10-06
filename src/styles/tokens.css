@@ -1,17 +1,20 @@
-/* Babel product site design tokens — graphite / warm gold / cyan. */
+/* Babel product site design tokens — X-brand identity:
+   deep black, electric blue neon, bracket-robot mark. */
 :root {
-  --bg: #0e1014;
-  --panel: #171b22;
-  --panel-raised: #1d232c;
-  --border: #2a313c;
-  --text: #f3f1ec;
-  --muted: #a9b1bd;
-  --gold: #d7b45f;
-  --gold-strong: #e6c572;
-  --cyan: #78c6d8;
-  --success: #7bc98f;
-  --warning: #d7b45f;
-  --failure: #e07a6a;
+  --bg: #05070b;
+  --panel: #0d1117;
+  --panel-raised: #121722;
+  --border: #1e2733;
+  --text: #f2f5f9;
+  --muted: #8b98a9;
+  --accent: #4da3ff;
+  --accent-strong: #7cbcff;
+  --accent-glow: rgba(77, 163, 255, 0.35);
+  --accent-deep: #1f5fd0;
+  --cyan: #37e0ff;
+  --success: #3fd68c;
+  --warning: #e5b45b;
+  --failure: #ff6b5e;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -43,6 +46,12 @@ body {
   font-size: 17px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  /* Subtle blueprint grid + blue radial glow, echoing the X banner. */
+  background-image:
+    radial-gradient(1100px 480px at 70% -10%, rgba(38, 84, 190, 0.22), transparent 70%),
+    linear-gradient(rgba(77, 163, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 163, 255, 0.035) 1px, transparent 1px);
+  background-size: auto, 42px 42px, 42px 42px;
 }
 
 code, pre, kbd {
@@ -50,13 +59,13 @@ code, pre, kbd {
 }
 
 a {
-  color: var(--cyan);
+  color: var(--accent);
 }
 
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 2px;
 }

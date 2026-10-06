@@ -28,7 +28,9 @@
 
 .brand strong {
   font-size: 1.15rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 .site-nav {
@@ -50,14 +52,14 @@
 
 .site-nav .nav-cta {
   color: var(--bg);
-  background: var(--gold);
+  background: var(--accent);
   padding: 6px 14px;
   border-radius: var(--radius);
   font-weight: 600;
 }
 
 .site-nav .nav-cta:hover {
-  background: var(--gold-strong);
+  background: var(--accent-strong);
   color: var(--bg);
 }
 
@@ -143,7 +145,7 @@
   letter-spacing: 0.14em;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--gold);
+  color: var(--accent);
   margin: 0 0 var(--space-2);
 }
 
@@ -152,6 +154,17 @@
   line-height: 1.12;
   margin: 0 0 var(--space-3);
   letter-spacing: -0.015em;
+  text-shadow: 0 0 28px rgba(77, 163, 255, 0.28);
+}
+
+.hero-tagline {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 12px var(--accent-glow);
 }
 
 .hero .lede {
@@ -165,7 +178,7 @@
   margin-top: var(--space-3);
   font-size: 0.92rem;
   color: var(--muted);
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid var(--accent);
   padding-left: var(--space-3);
 }
 
@@ -190,12 +203,15 @@
 }
 
 .button.primary {
-  background: var(--gold);
-  color: var(--bg);
+  background: linear-gradient(180deg, #2f6fe0, #1f5fd0);
+  color: #eaf3ff;
+  box-shadow: 0 0 14px var(--accent-glow), 0 0 34px rgba(31, 95, 208, 0.28);
+  border-color: transparent;
 }
 
 .button.primary:hover {
-  background: var(--gold-strong);
+  background: linear-gradient(180deg, #3d7ff0, #2f6fe0);
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 48px rgba(31, 95, 208, 0.4);
 }
 
 .button.secondary {
@@ -249,7 +265,7 @@
 }
 
 .mode-card.primary-mode {
-  border-color: var(--gold);
+  border-color: var(--accent);
 }
 
 .mode-badge {
@@ -257,8 +273,8 @@
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--gold);
-  border: 1px solid var(--gold);
+  color: var(--accent);
+  border: 1px solid var(--accent);
   border-radius: 999px;
   padding: 2px 10px;
 }
@@ -292,9 +308,10 @@
 .terminal-figure {
   margin: 0;
   background: var(--panel);
-  border: 1px solid var(--border);
+  border: 1px solid var(--accent-deep);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: 0 0 24px rgba(31, 95, 208, 0.22), inset 0 0 60px rgba(13, 20, 32, 0.6);
 }
 
 .terminal-figure figcaption {
@@ -306,9 +323,9 @@
 
 .reference-label {
   display: inline-block;
-  background: color-mix(in srgb, var(--gold) 18%, transparent);
-  color: var(--gold-strong);
-  border: 1px solid var(--gold);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent-strong);
+  border: 1px solid var(--accent);
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.08em;
