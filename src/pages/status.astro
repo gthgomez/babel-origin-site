@@ -1,5 +1,6 @@
 ---
 import MarketingLayout from "../layouts/MarketingLayout.astro";
+import { siteRepoUrl } from "../lib/site-repo";
 import FeatureStatus from "../components/FeatureStatus.astro";
 import { parseProductSnapshot } from "../lib/product-content";
 import snapshotData from "../data/product-status.json";
@@ -62,7 +63,7 @@ const featuresWithEvidence = snapshot.features.map((f) => ({
       Qualification of the ordinary coding loop is an upstream engineering
       effort. When it produces new evidence, the pinned snapshot on this page
       is refreshed through a reviewed content change — never automatically.
-      See <a href="https://github.com/gthgomez/babel-origin-site/blob/main/docs/content-maintenance.md">how content is maintained</a>.
+      See <a href={siteRepoUrl("blob/docs/content-maintenance.md")}>how content is maintained</a>.
     </p>
   </section>
 </MarketingLayout>

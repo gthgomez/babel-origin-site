@@ -1,5 +1,6 @@
 ---
 import MarketingLayout from "../layouts/MarketingLayout.astro";
+import { siteRepoUrl } from "../lib/site-repo";
 ---
 <MarketingLayout
   title="Security — Babel site"
@@ -24,7 +25,7 @@ import MarketingLayout from "../layouts/MarketingLayout.astro";
       <li>Strict CSP delivered as build-generated meta policy — no <code>unsafe-inline</code> or <code>unsafe-eval</code>; the single narrow exception is <code>'wasm-unsafe-eval'</code> for same-origin search (Pagefind).</li>
       <li>Response headers on every route: <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy: strict-origin-when-cross-origin</code>.</li>
       <li>Same-origin resources by default; normal page loads make no provider, GitHub, or analytics requests.</li>
-      <li>Proprietary site source; see the <a href="https://github.com/gthgomez/babel-origin-site/blob/main/LICENSE">LICENSE</a> and the repository <a href="https://github.com/gthgomez/babel-origin-site/blob/main/SECURITY.md">SECURITY.md</a>.</li>
+      <li>Proprietary site source; see the <a href={siteRepoUrl("blob/LICENSE")}>LICENSE</a> and the repository <a href={siteRepoUrl("blob/SECURITY.md")}>SECURITY.md</a>.</li>
     </ul>
   </section>
 

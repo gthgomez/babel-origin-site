@@ -2,6 +2,8 @@
 // Source provenance note rendered at the end of every guide. "Edit this page"
 // targets this site repository; "Implementation source" targets the Babel
 // product repository at the pinned revision. They never point at the same place.
+import { siteRepoUrl } from "../lib/site-repo";
+
 interface Props {
   pageType: string;
   sourceRevision: string;
@@ -14,7 +16,8 @@ interface Props {
 const { pageType, sourceRevision, reviewedAt, sourcePaths, interfaces = [], prerequisites = [] } = Astro.props;
 const shortSha = sourceRevision.slice(0, 12);
 const babelTree = `https://github.com/gthgomez/Babel/blob/${sourceRevision}`;
-const siteEdit = `https://github.com/gthgomez/babel-origin-site/edit/main/src/content/docs`;
+const siteEdit = siteRepoUrl("edit/src/content/docs");
+const siteTree = siteRepoUrl("tree/src/content/docs");
 ---
 <aside class="source-note">
   <p class="source-note-meta">
@@ -36,7 +39,9 @@ const siteEdit = `https://github.com/gthgomez/babel-origin-site/edit/main/src/co
     ))}
   </ul>
   <p class="source-note-links">
-    <a href={siteEdit}>Suggest an edit to this page</a> (site repository) ·
+    <a href={siteEdit}>Suggest an edit to this page</a> (site repository,
+    current deployment branch) ·
+    <a href={siteTree}>Browse all guides</a> ·
     <a href={babelTree}>Implementation source</a> (Babel repository)
   </p>
   <p class="source-note-caveat">
