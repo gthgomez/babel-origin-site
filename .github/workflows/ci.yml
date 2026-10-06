@@ -32,6 +32,9 @@ jobs:
       - name: Content check and build public/
         run: npm run build
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Run tests
         run: npm test
 
