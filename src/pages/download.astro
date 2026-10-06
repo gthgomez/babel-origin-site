@@ -1,0 +1,84 @@
+---
+import MarketingLayout from "../layouts/MarketingLayout.astro";
+import InstallActions from "../components/InstallActions.astro";
+import { parseProductSnapshot } from "../lib/product-content";
+import snapshotData from "../data/product-status.json";
+
+const snapshot = parseProductSnapshot(snapshotData);
+const source = snapshot.distributions.find((d) => d.kind === "source");
+const others = snapshot.distributions.filter((d) => d.kind !== "source");
+const AVAILABILITY: Record<string, string> = {
+  available: "Available",
+  not_available: "Not available",
+  unknown: "Unknown",
+};
+---
+<MarketingLayout
+  title="Get Babel — download"
+  description="Install Babel Harness from source. No npm package or public binary download exists yet — here is the supported path and the honest state of everything else."
+  canonicalPath="/download"
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Get Babel</p>
+      <h1>Install Babel from source.</h1>
+      <p class="lede">
+        The supported installation path today is a source clone and build.
+        There is no published npm package and no public binary download —
+        everything on this page says exactly what exists and what does not.
+      </p>
+      <InstallActions snapshot={snapshot} />
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="section-heading">
+      <h2>Source installation</h2>
+    </div>
+    <p>
+      Requirements: Node.js 22.19+ (22.x line) or 24.13.1+ (24.x line), Git,
+      and — for model sessions — a provider key. Full steps in the
+      <a href="/docs/getting-started/install/">installation guide</a>:
+    </p>
+    <pre class="install-commands"><code>git clone https://github.com/gthgomez/Babel.git
+cd Babel
+npm --prefix ./babel-cli ci &amp;&amp; npm --prefix ./babel-cli run build
+node ./babel-cli/dist/index.js doctor</code></pre>
+  </section>
+
+  <section class="band">
+    <div class="section-heading">
+      <p class="eyebrow">Distribution status</p>
+      <h2>What is (and is not) published</h2>
+    </div>
+    <div class="card-grid">
+      {others.map((dist) => (
+        <article class="card">
+          <span class={`status-pill ${dist.availability === "available" ? "released" : ""}`}>
+            {AVAILABILITY[dist.availability]}
+          </span>
+          <h3>{dist.label}</h3>
+          {dist.version && <p><code>{dist.version}</code></p>}
+          <p>{dist.reason ?? ""}</p>
+          {dist.signingState === "unsigned" && (
+            <p><strong>Signing:</strong> unsigned.</p>
+          )}
+        </article>
+      ))}
+    </div>
+    <p>
+      See <a href="/status/">status</a> for the evidence behind each record.
+    </p>
+  </section>
+</MarketingLayout>
+
+<style>
+  .install-commands {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+  }
+</style>

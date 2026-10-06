@@ -1,0 +1,93 @@
+---
+import MarketingLayout from "../layouts/MarketingLayout.astro";
+import FeatureStatus from "../components/FeatureStatus.astro";
+import { parseProductSnapshot } from "../lib/product-content";
+import snapshotData from "../data/product-status.json";
+
+const snapshot = parseProductSnapshot(snapshotData);
+const evidenceById = new Map(snapshot.evidence.map((e) => [e.id, e]));
+const featuresWithEvidence = snapshot.features.map((f) => ({
+  ...f,
+  evidence: f.evidenceIds.map((id) => evidenceById.get(id)).filter((e) => !!e),
+}));
+---
+<MarketingLayout
+  title="Babel product status"
+  description={`A dated capability and qualification snapshot of Babel Harness at source revision ${snapshot.sourceRevision.slice(0, 12)}, reviewed ${snapshot.reviewedAt}. Not a live monitoring dashboard.`}
+  canonicalPath="/status"
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Status</p>
+      <h1>What exists, and how far it is verified.</h1>
+      <p class="lede">
+        This is a <strong>dated product snapshot</strong>, not a hosted uptime
+        dashboard. Availability (the surface exists in source) and
+        qualification (what has actually been verified) are separate columns
+        of the same story.
+      </p>
+      <p>
+        Product source pinned at <code>{snapshot.sourceRevision.slice(0, 12)}</code>
+        · reviewed <strong>{snapshot.reviewedAt}</strong>
+      </p>
+    </div>
+  </section>
+
+  <section class="band">
+    {featuresWithEvidence.map((feature) => (
+      <article class="status-row">
+        <div>
+          <h2>{feature.label}</h2>
+          <p class="status-scope">{feature.scope}</p>
+          <ul>
+            {feature.limitations.map((limitation) => (
+              <li>{limitation}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="status-meta">
+          <FeatureStatus snapshot={snapshot} ids={[feature.id]} />
+          {feature.evidence.map((e) => (
+            <p class="status-evidence">
+              <a href={e!.url}>evidence: {e!.id}</a> — {e!.supports}
+            </p>
+          ))}
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="band">
+    <p>
+      Qualification of the ordinary coding loop is an upstream engineering
+      effort. When it produces new evidence, the pinned snapshot on this page
+      is refreshed through a reviewed content change — never automatically.
+      See <a href="https://github.com/gthgomez/babel-origin-site/blob/main/docs/content-maintenance.md">how content is maintained</a>.
+    </p>
+  </section>
+</MarketingLayout>
+
+<style>
+  .status-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 24px;
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+  }
+  .status-row h2 {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+  }
+  .status-scope {
+    color: var(--muted);
+  }
+  .status-evidence {
+    font-size: 0.88rem;
+  }
+  @media (max-width: 800px) {
+    .status-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
