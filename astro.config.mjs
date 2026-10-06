@@ -28,7 +28,7 @@ export default defineConfig({
       description:
         "Task-oriented documentation for Babel Harness: install, first use, modes, and troubleshooting.",
       logo: {
-        src: "./src/assets/babel-mark.svg",
+        src: "./src/assets/babel-emblem.png",
         alt: "Babel",
       },
       social: [

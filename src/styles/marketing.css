@@ -26,6 +26,11 @@
   color: var(--text);
 }
 
+.brand-mark {
+  border-radius: 8px;
+  display: block;
+}
+
 .brand strong {
   font-size: 1.15rem;
   letter-spacing: 0.28em;
