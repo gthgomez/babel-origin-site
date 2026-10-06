@@ -4,3 +4,4 @@ public/
 HARDENING_PLAN.md
 
 .vercel
+node_modules/
