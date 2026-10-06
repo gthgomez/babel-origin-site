@@ -10,13 +10,23 @@ const SEARCH_TERMS: Array<[string, RegExp]> = [
   ["resume", /resume|sessions/i],
 ];
 
+async function openSearch(page: import("@playwright/test").Page) {
+  // Prefer the visible search trigger; fall back to the keyboard shortcut.
+  const trigger = page.locator("button[data-open-modal], a[aria-label='Search'], button[aria-label='Search']");
+  if (await trigger.count()) {
+    await trigger.first().click();
+  } else {
+    await page.keyboard.press("ControlOrMeta+k");
+  }
+}
+
 test.beforeEach(async ({ page }) => {
   await page.goto("/docs/");
 });
 
 for (const [term, expected] of SEARCH_TERMS) {
   test(`search finds a real guide for "${term}"`, async ({ page }) => {
-    await page.keyboard.press("ControlOrMeta+k");
+    await openSearch(page);
     const input = page.locator(".pagefind-ui__search-input");
     await expect(input).toBeVisible();
     await input.fill(term);
@@ -28,7 +38,7 @@ for (const [term, expected] of SEARCH_TERMS) {
 }
 
 test("search no-results state and keyboard behavior", async ({ page }) => {
-  await page.keyboard.press("ControlOrMeta+k");
+  await openSearch(page);
   const input = page.locator(".pagefind-ui__search-input");
   await expect(input).toBeVisible();
   await input.fill("xkcdqzzzunlikely");
