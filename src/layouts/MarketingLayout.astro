@@ -33,7 +33,7 @@ const canonical = new URL(canonicalPath, site).toString();
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <SiteHeader />
-    <main id="main-content" class="marketing-main">
+    <main id="main-content" class="marketing-main" tabindex="-1">
       <slot />
     </main>
     <SiteFooter />

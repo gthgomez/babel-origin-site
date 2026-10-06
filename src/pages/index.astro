@@ -1,8 +1,12 @@
 ---
 import MarketingLayout from "../layouts/MarketingLayout.astro";
+import FeatureStatus from "../components/FeatureStatus.astro";
+import { parseProductSnapshot } from "../lib/product-content";
+import snapshotData from "../data/product-status.json";
 
 // Exact hero copy from the product spec (§6). The homepage explains Babel and
 // routes visitors to a real next step; claims stay positioning statements.
+const snapshot = parseProductSnapshot(snapshotData);
 ---
 <MarketingLayout
   title="Babel — A coding agent that shows its work"
@@ -69,5 +73,19 @@ import MarketingLayout from "../layouts/MarketingLayout.astro";
         <p>Additional workflow structure for bigger tasks — not a blanket reliability upgrade.</p>
       </article>
     </div>
+  </section>
+
+  <section id="current-state" class="band">
+    <div class="section-heading">
+      <p class="eyebrow">Current state</p>
+      <h2>What exists today, and how far it is verified</h2>
+    </div>
+    <FeatureStatus snapshot={snapshot} ids={["chat", "plan", "deep", "desktop"]} />
+    <p>
+      See <a href="/status/">status</a> for the full capability snapshot with
+      evidence links, and the
+      <a href="https://github.com/gthgomez/Babel/blob/{snapshot.sourceRevision}/README.md">product source</a>
+      for the pinned revision behind this summary.
+    </p>
   </section>
 </MarketingLayout>

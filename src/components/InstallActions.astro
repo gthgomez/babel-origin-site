@@ -1,0 +1,31 @@
+---
+// Renders install actions derived by getInstallActions. Download actions only
+// appear when the snapshot proves a real public asset; otherwise a truthful
+// notice is shown instead of a button.
+import { getInstallActions, type ProductSnapshot } from "../lib/product-content";
+
+interface Props {
+  snapshot: ProductSnapshot;
+}
+
+const { snapshot } = Astro.props;
+const actions = getInstallActions(snapshot);
+---
+<div class="actions" aria-label="Install Babel">
+  {actions.map((action) =>
+    action.kind === "source" ? (
+      <a class="button primary" href={action.href}>{action.label}</a>
+    ) : (
+      <a class="button secondary" href={action.href}>{action.label}</a>
+    )
+  )}
+</div>
+{actions.filter((a) => a.notice).length > 0 && (
+  <ul class="install-notices">
+    {actions.filter((a) => a.notice).map((action) => (
+      <li>
+        <strong>{action.label}:</strong> {action.notice}
+      </li>
+    ))}
+  </ul>
+)}
