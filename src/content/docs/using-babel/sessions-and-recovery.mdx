@@ -1,0 +1,62 @@
+---
+title: Sessions and recovery
+description: Resume, checkpoints, and CLI undo — including the intentional split between TUI commands and CLI recovery.
+slug: docs/using-babel/sessions-and-recovery
+pageType: reference
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - TUI
+  - CLI
+prerequisites:
+  - Quickstart
+sourcePaths:
+  - START_HERE.md
+  - docs/CLI_QUICKSTART.md
+  - docs/CHAT_MODE.md
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+## Continuing earlier conversations
+
+```powershell
+node .\babel-cli\dist\index.js resume
+```
+
+Inside a session, `/resume` continues a persisted conversation. Session state
+is local to your machine.
+
+## Checkpoints (in-session)
+
+```text
+/checkpoint    mark a restore point
+/restore       return to a checkpoint
+```
+
+## Undo (CLI only)
+
+```powershell
+node .\babel-cli\dist\index.js undo
+```
+
+`undo` restores the last checkpoint. **The TUI has no `/undo` command** — this
+split is intentional. Do not trust any documentation (including older Babel
+prose) that suggests typing `/undo` inside a session; use `/checkpoint` and
+`/restore` in-session, or CLI `undo`.
+
+## Limits to know
+
+- Sessions and checkpoints are local runtime state, not a distributed
+  history; treat them as part of your working copy.
+- Checkpoints restore code state; they do not "unsend" provider API calls or
+  revert your provider account spend.
+
+<DocsSourceNote
+  pageType="reference"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["START_HERE.md", "docs/CLI_QUICKSTART.md", "docs/CHAT_MODE.md"]}
+  interfaces={["TUI", "CLI"]}
+  prerequisites={["Quickstart"]}
+/>

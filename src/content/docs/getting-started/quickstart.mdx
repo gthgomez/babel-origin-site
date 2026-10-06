@@ -1,0 +1,93 @@
+---
+title: Quickstart
+description: A no-key setup and doctor checkpoint first, then — separately and clearly labeled — a provider-backed first conversation.
+slug: docs/getting-started/quickstart
+pageType: tutorial
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+  - TUI
+prerequisites:
+  - Install Babel from source
+sourcePaths:
+  - START_HERE.md
+  - docs/CLI_QUICKSTART.md
+  - babel-cli/.env.example
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+There are two distinct steps that are easy to confuse:
+
+1. **No key needed.** Build, run the doctor diagnostic, and inspect the
+   harness. This works without any provider credentials.
+2. **Key needed.** Start a real model-backed conversation. This requires a
+   provider credential and — before any mutating work — an execution-isolation
+   decision.
+
+This page keeps them separate on purpose.
+
+## Step 1 — no-key checkpoint
+
+From the repository root after a source build:
+
+```powershell
+node .\babel-cli\dist\index.js doctor
+node .\babel-cli\dist\index.js setup --json
+```
+
+`doctor` prints environment findings (runtime, providers, Docker). It may
+legitimately report missing prerequisites — that is diagnostic information,
+not an install failure. You can also preview the instruction stack the router
+would select for a task class, with no model call:
+
+```powershell
+pwsh -File .\tools\resolve-local-stack.ps1 `
+  -TaskCategory backend `
+  -Project example_saas_backend `
+  -Model codex `
+  -PipelineMode deep `
+  -Format json
+```
+
+This "inspect the harness" path is useful, but it is not the product — the
+product is talking to it in step 2.
+
+## Step 2 — provider-backed conversation
+
+Configure a provider key locally. Babel reads credentials from
+`babel-cli/.env` (copy `babel-cli/.env.example`) or from your shell
+environment, which takes precedence. Never commit the populated file.
+
+```powershell
+Copy-Item .\babel-cli\.env.example .\babel-cli\.env
+# edit .env to set only the providers you use
+```
+
+Then start the interactive TUI:
+
+```powershell
+node .\babel-cli\dist\index.js interactive
+```
+
+and talk to it:
+
+```text
+> Explain this repository
+> Review the changes you just made
+```
+
+Before asking Babel to *change* files, read
+[Execution profiles](/docs/safety/execution-profiles/): the default
+`safe_repo` profile fails closed without Docker isolation. There is no
+host-fallback shortcut that removes that boundary.
+
+<DocsSourceNote
+  pageType="tutorial"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["START_HERE.md", "docs/CLI_QUICKSTART.md", "babel-cli/.env.example"]}
+  interfaces={["CLI", "TUI"]}
+  prerequisites={["Install from source"]}
+/>

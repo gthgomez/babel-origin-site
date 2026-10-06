@@ -1,0 +1,86 @@
+---
+title: Install Babel from source
+description: The supported installation path today is cloning the repository and building the CLI. No npm package or public binary download exists yet.
+slug: docs/getting-started/install
+pageType: tutorial
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+  - TUI
+prerequisites:
+  - Git
+  - Node.js 22.19+ (22.x line) or 24.13.1+ (24.x line)
+sourcePaths:
+  - README.md
+  - docs/CLI_QUICKSTART.md
+  - babel-cli/package.json
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Babel is **not published as an npm package and has no public binary download**.
+The supported installation path is a source clone. Anything else you may find
+(an `npm install babel`-style command, an installer) is not Babel Harness.
+
+## 1. Clone and build
+
+PowerShell:
+
+```powershell
+git clone https://github.com/gthgomez/Babel.git
+cd Babel
+npm --prefix .\babel-cli ci
+npm --prefix .\babel-cli run build
+```
+
+macOS / Linux:
+
+```bash
+git clone https://github.com/gthgomez/Babel.git
+cd Babel
+npm --prefix ./babel-cli ci && npm --prefix ./babel-cli run build
+```
+
+The authoritative package root is `babel-cli/` — the repository has no root
+`package.json`. After the build, commands run as
+`node .\babel-cli\dist\index.js` (or `node ./babel-cli/dist/index.js`) from
+the repository root. `babel` is not assumed to be on PATH.
+
+## 2. Verify the build
+
+Run the no-key diagnostic — it intentionally reports missing prerequisites and
+does not need a provider key:
+
+```powershell
+node .\babel-cli\dist\index.js doctor
+```
+
+Expected state: the command runs and prints environment findings. Missing
+provider keys or Docker are legitimate findings at this stage, not failures of
+the install. Exit zero is not the only legitimate documented outcome.
+
+## 3. What about Desktop?
+
+The Electron Desktop shell and an unsigned Windows portable bundle builder
+exist in the source tree, but **no Desktop download is published**. See
+[Desktop](/docs/interfaces/desktop/) for what exists and what is explicitly
+unqualified.
+
+## Requirements recap
+
+| Requirement | Needed for |
+| --- | --- |
+| Node.js 22.19+ (22.x) or 24.13.1+ (24.x) | Building and running the CLI |
+| Git | Cloning the source |
+| A provider API key | Model-backed sessions (not for inspecting the harness) |
+| Docker + sandbox image, or an isolation decision | Mutating work under the default `safe_repo` profile |
+
+<DocsSourceNote
+  pageType="tutorial"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["README.md", "docs/CLI_QUICKSTART.md", "babel-cli/package.json"]}
+  interfaces={["CLI", "TUI"]}
+  prerequisites={["Git", "Node.js 22.19+ / 24.13.1+"]}
+/>

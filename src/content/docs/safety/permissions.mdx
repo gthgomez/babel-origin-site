@@ -1,0 +1,56 @@
+---
+title: Permissions and approvals
+description: How Babel asks before tools run, and where approval behavior is configured — without compliance promises.
+slug: docs/safety/permissions
+pageType: concept
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - TUI
+  - CLI
+sourcePaths:
+  - docs/CHAT_MODE.md
+  - babel-cli/src/agent/chatApproval.ts
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Babel's permission model is explicit rather than ambient: tools that affect
+your system or repository surface their activity, and mutating work happens
+under approval behavior you configure.
+
+## What you will see
+
+- **Tool rows in the TUI**: reads, searches, edits, and commands appear as
+  they happen.
+- **Just-in-time approval**: when a tool needs permission under your current
+  approval profile, Babel asks at that moment.
+
+## Configuring approval behavior
+
+Inside a session:
+
+```text
+/permissions   show or set the approval profile
+```
+
+The current profile applies to the session; check `/permissions` after
+changing settings to confirm what is active.
+
+## Boundaries you should not assume away
+
+- Permission approval is a UX layer on top of execution isolation, not a
+  substitute for it. The [execution profile](/docs/safety/execution-profiles/)
+  still governs *how* commands run (container vs host).
+- This page describes documented behavior of the product; it is not a
+  compliance certification and does not promise that every riskful action is
+  intercepted in every environment. Read the cited source for the current
+  implementation.
+
+<DocsSourceNote
+  pageType="concept"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/CHAT_MODE.md", "babel-cli/src/agent/chatApproval.ts"]}
+  interfaces={["TUI", "CLI"]}
+/>

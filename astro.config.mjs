@@ -41,8 +41,50 @@ export default defineConfig({
       // Completed pages only; placeholder sidebar entries are forbidden.
       sidebar: [
         {
-          label: "Start here",
-          items: ["docs"],
+          label: "Getting started",
+          items: [
+            "docs",
+            "docs/getting-started/install",
+            "docs/getting-started/quickstart",
+            "docs/getting-started/first-coding-task",
+            "docs/getting-started/troubleshooting",
+          ],
+        },
+        {
+          label: "Using Babel",
+          items: [
+            "docs/using-babel/chat",
+            "docs/using-babel/plan",
+            "docs/using-babel/deep",
+            "docs/using-babel/sessions-and-recovery",
+          ],
+        },
+        {
+          label: "Interfaces",
+          items: ["docs/interfaces/overview", "docs/interfaces/desktop"],
+        },
+        {
+          label: "Configuration",
+          items: ["docs/configuration/models-and-providers"],
+        },
+        {
+          label: "Safety",
+          items: [
+            "docs/safety/permissions",
+            "docs/safety/execution-profiles",
+          ],
+        },
+        {
+          label: "Verification",
+          items: ["docs/verification/overview"],
+        },
+        {
+          label: "Customization",
+          items: ["docs/customization/project-instructions"],
+        },
+        {
+          label: "Reference",
+          items: ["docs/reference/cli", "docs/architecture/overview"],
         },
       ],
       customCss: ["./src/styles/docs.css"],

@@ -1,0 +1,64 @@
+---
+title: Architecture overview
+description: The engine and interface boundaries of Babel today, and the Prompt OS idea — as implemented, not as a future design.
+slug: docs/architecture/overview
+pageType: concept
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+  - TUI
+  - Desktop
+  - MCP
+sourcePaths:
+  - docs/VISION.md
+  - docs/architecture/HARNESS_OVERVIEW.md
+  - docs/CHAT_MODE.md
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Babel is an agent harness for software work with a structured Prompt OS
+underneath. This page explains the shape of what exists in source today.
+
+## Product modes over a shared kernel
+
+The three daily modes — Chat, Plan, Deep — are different entrypoints that
+share common machinery:
+
+- **Chat** runs a multi-turn ChatEngine loop with a deliberately minimal
+  prompt stack. No orchestrator, no pipeline stages.
+- **Plan** runs a governed plan path and stops at a reviewable plan artifact.
+- **Deep** loads the governed pipeline (orchestrator, QA review, executor).
+- All three share the **unified execution kernel** — completion decisions and
+  tool mapping — so a completion claim is decided by harness policy rather
+  than model confidence.
+
+## Prompt OS
+
+The "Prompt OS" is Babel's structured instruction stack: a behavioral core,
+domain architects, skills, and task overlays, routed per task from a declared
+catalog. Chat loads the smallest useful stack. The stack is inspectable
+before execution — you can preview what would be selected without a model
+call (see [Quickstart](/docs/getting-started/quickstart/)).
+
+## Interfaces and boundaries
+
+The TUI, headless CLI, Desktop shell, and MCP server are interfaces over the
+same engine. The Desktop shell runs the CLI; the MCP server is read-only
+inspection. There is no separate per-interface runtime.
+
+## What is *not* claimed
+
+- This page describes implemented boundaries only. No persistent daemon
+  design, no one-runtime refactor, and no future architecture is implied.
+- Normative architecture detail lives in the product repository; the pages
+  there outrank this summary.
+
+<DocsSourceNote
+  pageType="concept"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/VISION.md", "docs/architecture/HARNESS_OVERVIEW.md", "docs/CHAT_MODE.md"]}
+  interfaces={["CLI", "TUI", "Desktop", "MCP"]}
+/>

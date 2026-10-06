@@ -1,0 +1,66 @@
+---
+title: Execution profiles
+description: How Babel decides whether commands run in Docker isolation or on your host — including what dev_local actually permits.
+slug: docs/safety/execution-profiles
+pageType: reference
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+  - TUI
+sourcePaths:
+  - babel-cli/src/config/executionProfiles.ts
+  - docs/CHAT_MODE.md
+  - docs/architecture/HARNESS_OVERVIEW.md
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Execution profiles are Babel's isolation policy. The profile decides whether
+project commands run inside a Docker sandbox or on your host, and what
+happens when isolation cannot activate.
+
+## The profiles you will actually encounter
+
+| Profile | Behavior |
+| --- | --- |
+| `safe_repo` (default) | Expects Docker isolation. Without a Docker daemon **and** a configured sandbox image (`BABEL_BENCHMARK_DOCKER_IMAGE`), it **fails closed** — it does not silently fall back to the host. |
+| `dev_local` | Runs without Docker. **Permits intrinsic inspection commands only** (e.g. `rg`, `git status`, `cat`). Project-code execution — `npm`/`cargo`/`go`/`java`/`gradle` tests and builds — **is denied without Docker isolation**. |
+| `benchmark_container`, others | Additional profiles exist for research/benchmark workflows; see the source for current definitions. |
+
+## Selecting a profile
+
+```powershell
+# Environment-wide for this shell:
+$env:BABEL_EXECUTION_PROFILE = 'dev_local'
+
+# Or per run, on surfaces that expose the flag:
+node .\babel-cli\dist\index.js run "task" --execution-profile dev_local
+```
+
+Default remains `safe_repo` when nothing is set.
+
+## Explicit host escalation
+
+If you keep `safe_repo` but Docker is unavailable, the explicit escalation is
+`BABEL_ALLOW_HOST_FALLBACK=1` (also accepts `true`/`yes`). `BABEL_DOCKER_DISABLE=true`
+is a legacy opt-out that also counts as explicit escalation. Both are
+decisions *you* make for code you have reviewed — they are not defaults and
+this site will not present them as convenience workarounds.
+
+## A documentation contradiction you should know about
+
+Some older Babel prose (README quickstart, CHAT_MODE's profile table, and
+others) describes `dev_local` as suitable for "day-to-day host coding". The
+implementation does not support that: `dev_local` denies project-code tests
+and builds without isolation. Where prose and enforcement disagree, trust the
+enforcement — this page follows the implementation at the pinned revision.
+The mismatch is recorded for upstream correction.
+
+<DocsSourceNote
+  pageType="reference"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["babel-cli/src/config/executionProfiles.ts", "docs/CHAT_MODE.md", "docs/architecture/HARNESS_OVERVIEW.md"]}
+  interfaces={["CLI", "TUI"]}
+/>

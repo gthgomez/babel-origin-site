@@ -1,0 +1,69 @@
+---
+title: Models and providers
+description: How Babel discovers provider credentials, which providers are documented, and what stays local.
+slug: docs/configuration/models-and-providers
+pageType: guide
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+  - TUI
+prerequisites:
+  - Install from source
+sourcePaths:
+  - babel-cli/.env.example
+  - docs/CLI_QUICKSTART.md
+  - babel-cli/src/config/executionProfiles.ts
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Babel is local software that you bring your own provider to. It does not
+include model inference and does not host your credentials.
+
+## Where credentials live
+
+- `babel-cli/.env` — a local file you create from `babel-cli/.env.example`.
+  Keep values out of source control.
+- **Shell/CI environment variables take precedence** over that file.
+
+Never commit a populated `.env`, paste keys into chat, or share the file.
+
+## Documented providers
+
+Per the product's example configuration and quickstart:
+
+- **DeepSeek** — required for typical live provider-backed runs
+  (`DEEPSEEK_API_KEY`).
+- Other keys in `.env.example` are optional (legacy/offline compatibility).
+- **Ollama** — a local, credential-free route
+  (`BABEL_OLLAMA_BASE_URL`, default `http://localhost:11434/v1`).
+- **OpenCode Zen** — optional route (`BABEL_OPENCODE_BASE_URL`).
+
+Model selection inside a session uses `/model`. The prompt stack's model
+adapter is selected by the configured model-policy waterfall.
+
+## Verify a provider
+
+```powershell
+node .\babel-cli\dist\index.js models ping --json
+```
+
+`models ping` needs a configured provider; skip it on the no-key inspect path.
+
+## What stays where
+
+- Credentials: your machine, in the places above. Babel does not sync them.
+- Project content: a task may send project content to your configured
+  provider and incur charges — review run confirmations and tool approvals.
+- Local execution does not imply local *inference*: provider-backed runs call
+  out to the provider you configured.
+
+<DocsSourceNote
+  pageType="guide"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["babel-cli/.env.example", "docs/CLI_QUICKSTART.md"]}
+  interfaces={["CLI", "TUI"]}
+  prerequisites={["Install from source"]}
+/>

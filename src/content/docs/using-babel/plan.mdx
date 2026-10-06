@@ -1,0 +1,55 @@
+---
+title: Plan
+description: Planning before mutation — an explicit plan gate you approve before work is applied.
+slug: docs/using-babel/plan
+pageType: guide
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+  - TUI
+prerequisites:
+  - Quickstart
+sourcePaths:
+  - docs/CHAT_MODE.md
+  - docs/CLI_QUICKSTART.md
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Plan mode produces a reviewable plan before any mutation happens. Use it when
+you want an explicit gate between "what Babel intends to do" and "what it
+actually does".
+
+```powershell
+node .\babel-cli\dist\index.js plan "Split the auth module safely"
+```
+
+## Behavior and boundaries
+
+- Plan mode does **not** load the full governed pipeline; it runs the plan
+  path and stops at a plan artifact, with interactive apply on approval.
+- The plan is produced for your review — reading a plan on this website or in
+  the CLI does not execute anything. Approval happens in your session, not
+  anywhere else.
+- Like chat, plan shares the unified execution kernel and the same
+  execution-profile isolation rules.
+
+## When to choose Plan instead of Chat
+
+- The change spans several files or subsystems.
+- You want to check scope before any write happens.
+- You are working in a repository where mutation needs review first.
+
+For riskier work that also wants adversarial review and verification
+structure, see [Deep](/docs/using-babel/deep/). Plan is not more reliable than
+Chat for ordinary tasks — it is a different gate.
+
+<DocsSourceNote
+  pageType="guide"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/CHAT_MODE.md", "docs/CLI_QUICKSTART.md"]}
+  interfaces={["CLI", "TUI"]}
+  prerequisites={["Quickstart"]}
+/>

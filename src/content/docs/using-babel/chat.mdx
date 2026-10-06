@@ -1,0 +1,82 @@
+---
+title: Chat
+description: The daily, default mode — a multi-turn conversational coding loop with visible tool activity and approvals.
+slug: docs/using-babel/chat
+pageType: guide
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - TUI
+  - CLI
+prerequisites:
+  - Quickstart
+sourcePaths:
+  - docs/CHAT_MODE.md
+  - babel-cli/src/agent/chatEngine.ts
+  - babel-cli/src/agent/chatApproval.ts
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Chat is the default mode of Babel: `babel "<task>"` starts a lightweight,
+multi-turn conversational coding loop with live tool access. It deliberately
+loads no orchestrator and no pipeline stages — the path of least resistance
+for daily coding.
+
+## What a chat turn looks like
+
+Inside the TUI you will see Babel's tool activity as it happens: file reads,
+searches, edits, and verification commands, each subject to your approval
+settings. You approve or deny at the moment a tool needs it (just-in-time
+approval).
+
+## Commands inside a session
+
+`/help` is the canonical list. Daily commands:
+
+```text
+/model         list or switch models
+/mode          chat / plan / deep
+/diff          inspect the latest changes
+/resume        continue a persisted conversation
+/permissions   show or set the approval profile
+/checkpoint    mark a restore point
+/restore       return to a checkpoint
+/cost          show session cost
+/cancel        cancel the current activity
+```
+
+## Chat from scripts (headless)
+
+The same engine runs non-interactively for CI and scripting:
+
+```powershell
+node .\babel-cli\dist\index.js chat --headless "Summarize the failing test"
+node .\babel-cli\dist\index.js run "Summarize the failing test" --mode chat --headless
+```
+
+Under headless/non-TTY runs, missing authoritative verification hard-blocks
+after gate strikes — weak verifier greens are not soft-allowed.
+
+## What chat does not do
+
+- It does not load the governed pipeline (that is [Deep](/docs/using-babel/deep/)).
+- It does not produce a reviewable plan artifact first (that is
+  [Plan](/docs/using-babel/plan/)).
+- A model's "I'm done" is not accepted as success: completion is gated by the
+  harness honesty policy. See [Verification](/docs/verification/overview/).
+
+## Boundaries
+
+Chat runs under the same execution-profile isolation rules as other modes.
+See [Execution profiles](/docs/safety/execution-profiles/) before any mutating
+task.
+
+<DocsSourceNote
+  pageType="guide"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/CHAT_MODE.md", "babel-cli/src/agent/chatEngine.ts", "babel-cli/src/agent/chatApproval.ts"]}
+  interfaces={["TUI", "CLI"]}
+  prerequisites={["Quickstart"]}
+/>

@@ -1,0 +1,71 @@
+---
+title: Desktop
+description: The Electron Desktop shell — what the source provides, what the Windows portable preview includes, and what is explicitly unqualified.
+slug: docs/interfaces/desktop
+pageType: reference
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - Desktop
+prerequisites:
+  - Windows x64 (for the portable preview)
+sourcePaths:
+  - babel-desktop/README.md
+  - babel-desktop/docs/INSTALL-WINDOWS.md
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Babel Desktop is an Electron visual shell for the Babel Harness. The real
+work still runs the Babel CLI underneath; Desktop is the window around it.
+
+## No public download
+
+There is **no published Desktop download**. The Windows x64 portable bundle
+is a contributor-built artifact produced from source (the builder pins Node
+24.13.1 and Electron, verifies archive SHA256 values, and emits BUILD.json
+plus SHA256SUMS). It is **unsigned**. See
+[Get Babel](/download/) for the supported install path today.
+
+## The opening screen is a reference preview
+
+The initial reference session reproduces a supplied screenshot and is
+explicitly labeled **REFERENCE PREVIEW**. Its model names, file names,
+findings, tool results, and context numbers are fixtures — not facts about an
+actual Babel run. After you connect a project, a task runs the real CLI and
+the center panel shows that run.
+
+## Bundled runtime and behavior
+
+The portable preview includes the Desktop shell, the authoritative CLI,
+immutable prompt assets, production dependencies, and a pinned Node runtime —
+no separate npm install needed. Setup notes:
+
+- Credentials are configured by you in a `.env` file in the configuration
+  directory shown in Setup. Desktop does not import credentials from other
+  apps or checkouts.
+- Desktop does not start Docker, change Windows policy, or switch to
+  unrestricted host execution. The default `safe_repo` profile still applies.
+- UI preferences live under `%APPDATA%\babel-north-star-desktop`; CLI state
+  lives under the bundle's `engine` directory. Nothing writes back to bundled
+  resources.
+
+## Explicitly unqualified
+
+Per the product's own installation notes:
+
+- No code-signing identity, SmartScreen reputation, automated updater,
+  Start Menu registration, or uninstaller.
+- Active model-task shutdown on quit is not qualified.
+- Cross-version profile migration is not qualified.
+
+Do not disable Windows security settings to run an unsigned preview.
+
+<DocsSourceNote
+  pageType="reference"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["babel-desktop/README.md", "babel-desktop/docs/INSTALL-WINDOWS.md"]}
+  interfaces={["Desktop"]}
+  prerequisites={["Windows x64"]}
+/>

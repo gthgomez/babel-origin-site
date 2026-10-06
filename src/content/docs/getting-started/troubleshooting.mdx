@@ -1,0 +1,93 @@
+---
+title: Troubleshooting
+description: Missing runtime, missing provider, blocked execution, and where to look when a session does not go as expected.
+slug: docs/getting-started/troubleshooting
+pageType: guide
+sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+  - TUI
+prerequisites:
+  - Quickstart
+sourcePaths:
+  - docs/CLI_QUICKSTART.md
+  - babel-cli/src/config/executionProfiles.ts
+  - babel-cli/src/config/benchmarkContainer.ts
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+## Start with diagnostics
+
+```powershell
+node .\babel-cli\dist\index.js doctor
+node .\babel-cli\dist\index.js setup --json
+```
+
+`doctor` reports environment findings without a provider key. `setup --json`
+gives a machine-readable view. Both may legitimately report missing
+prerequisites — read the findings rather than expecting a green checklist.
+
+## Common causes
+
+### "Node version not supported"
+
+The CLI targets Node.js **22.19.0+ in the 22.x line or 24.13.1+ in the 24.x
+line**. Check `node --version` and `babel-cli/package.json` `engines`.
+
+### Model session fails to start
+
+- No provider credential: set only the providers you use in
+  `babel-cli/.env` or your shell environment. Shell/CI variables take
+  precedence over the file.
+- Wrong provider for the route: live provider-backed runs typically need
+  `DEEPSEEK_API_KEY`; other keys in the example file are optional. Verify with
+  `node .\babel-cli\dist\index.js models ping --json` (requires a configured
+  provider).
+
+### Execution blocked / "fail-closed" without Docker
+
+This is expected behavior, not a bug to route around. The default `safe_repo`
+profile requires Docker isolation and a configured sandbox image
+(`BABEL_BENCHMARK_DOCKER_IMAGE`). Without them, shell execution fails closed.
+
+Your options, in order of preference:
+
+1. **Install/start Docker and configure the sandbox image**, keep `safe_repo`.
+2. **Keep `safe_repo` but explicitly allow host execution** with
+   `BABEL_ALLOW_HOST_FALLBACK=1` — an explicit escalation you choose, for code
+   you have reviewed.
+3. **`dev_local`** permits intrinsic inspection commands only; project-code
+   tests and builds are **denied without Docker isolation**. It is not a
+   workaround for blocked coding runs.
+
+There is no hidden flag that removes the isolation boundary, and this site
+will not suggest weakening it to make a tutorial succeed.
+
+### A session ended "unverified"
+
+An unverified-patch outcome means changes exist but authoritative verification
+did not substantively run. Run the project's checks yourself and read
+[Verification](/docs/verification/overview/) for what the outcome labels mean.
+
+### The TUI does not have /undo
+
+Recovery is intentionally split: use `/checkpoint` and `/restore` inside a
+session, or `node .\babel-cli\dist\index.js undo` from the CLI.
+
+## Where to inspect further
+
+- Session state and resume: `node .\babel-cli\dist\index.js resume`
+- The run's tool activity and approvals: the TUI transcript itself
+- Deeper runtime reference: the
+  [Babel repository docs](https://github.com/gthgomez/Babel/tree/main/docs)
+
+<DocsSourceNote
+  pageType="guide"
+  sourceRevision="cf17c00da3c51678fd010ed645224686dcea94b0"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/CLI_QUICKSTART.md", "babel-cli/src/config/executionProfiles.ts", "babel-cli/src/config/benchmarkContainer.ts"]}
+  interfaces={["CLI", "TUI"]}
+  prerequisites={["Quickstart"]}
+/>

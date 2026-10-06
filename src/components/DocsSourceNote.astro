@@ -1,0 +1,63 @@
+---
+// Source provenance note rendered at the end of every guide. "Edit this page"
+// targets this site repository; "Implementation source" targets the Babel
+// product repository at the pinned revision. They never point at the same place.
+interface Props {
+  pageType: string;
+  sourceRevision: string;
+  reviewedAt: string;
+  sourcePaths: string[];
+  interfaces?: string[];
+  prerequisites?: string[];
+}
+
+const { pageType, sourceRevision, reviewedAt, sourcePaths, interfaces = [], prerequisites = [] } = Astro.props;
+const shortSha = sourceRevision.slice(0, 12);
+const babelTree = `https://github.com/gthgomez/Babel/blob/${sourceRevision}`;
+const siteEdit = `https://github.com/gthgomez/babel-origin-site/edit/main/src/content/docs`;
+---
+<aside class="source-note">
+  <p class="source-note-meta">
+    Page type: <strong>{pageType}</strong> · Reviewed: <strong>{reviewedAt}</strong> ·
+    Product snapshot: <strong><code>{shortSha}</code></strong>
+    {interfaces.length > 0 && (
+      <span>· Interfaces: <strong>{interfaces.join(", ")}</strong></span>
+    )}
+    {prerequisites.length > 0 && (
+      <span>· Prerequisites: {prerequisites.join(", ")}</span>
+    )}
+  </p>
+  <p>
+    Written from Babel source at revision <code>{shortSha}</code>:
+  </p>
+  <ul>
+    {sourcePaths.map((path) => (
+      <li><code><a href={`${babelTree}/${path}`}>{path}</a></code></li>
+    ))}
+  </ul>
+  <p class="source-note-links">
+    <a href={siteEdit}>Suggest an edit to this page</a> (site repository) ·
+    <a href={babelTree}>Implementation source</a> (Babel repository)
+  </p>
+  <p class="source-note-caveat">
+    A source link proves provenance, not that this prose is complete. Behavioral
+    authority lives in the Babel repository; when this page and the product
+    disagree, the product wins — please report the gap.
+  </p>
+</aside>
+
+<style>
+  .source-note {
+    border-top: 1px solid var(--sl-color-border);
+    margin-top: 3rem;
+    padding-top: 1rem;
+    font-size: 0.88rem;
+    color: var(--sl-color-text-muted);
+  }
+  .source-note ul {
+    margin: 0.25rem 0;
+  }
+  .source-note-caveat {
+    font-style: italic;
+  }
+</style>
