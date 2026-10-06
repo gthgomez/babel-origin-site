@@ -80,4 +80,3 @@ writeFileSync(outFile, JSON.stringify(next, null, 2) + "\n");
 console.log(
   `csp-hashes: ${next.scriptHashes.length} script hashes, ${next.styleAttrHashes.length} style-attr hashes${next.scriptHashes.length || next.styleAttrHashes.length ? " (rebuild required)" : ""}`
 );
-process.exit(prev === JSON.stringify(next, null, 2) + "\n" ? 0 : 0);

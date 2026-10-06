@@ -8,6 +8,16 @@ import snapshotData from "../data/product-status.json";
 // routes visitors to a real next step; claims stay positioning statements.
 const snapshot = parseProductSnapshot(snapshotData);
 ---
+
+<style>
+  .proof-preview {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+</style>
 <MarketingLayout
   title="Babel — A coding agent that shows its work"
   description="A local coding agent with inspectable instructions, explicit permissions, and visible verification results. Start with Chat; use Plan or Deep when you need more structure."
@@ -33,9 +43,19 @@ const snapshot = parseProductSnapshot(snapshotData);
       </p>
     </div>
     <figure class="terminal-figure" id="proof">
+      <pre class="proof-preview">You
+  Fix the failing webhook retry test.
+
+Babel
+  ▸ Read src/webhooks/handler.ts
+  ▸ Edited src/webhooks/handler.ts
+  ▸ npm test -- webhook
+  ✓ 18 passed
+
+  Completed · 1 file changed · verified</pre>
       <figcaption>
-        <span class="reference-label">Reference preview</span> — an interface
-        walkthrough, not a live run.
+        <span class="reference-label">Reference preview</span> — an illustrative
+        walkthrough, not a live run. See the <a href="/tour/">product tour</a>.
       </figcaption>
     </figure>
   </section>

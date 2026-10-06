@@ -34,6 +34,14 @@ tag; the Vercel response header no longer repeats a script/style policy.**
   script fails the `securitypolicyviolation` check in
   `tests/e2e/navigation.spec.ts`, forcing a deliberate hash refresh.
 - No `unsafe-inline` or `unsafe-eval` anywhere.
+
+## Hash-file lifecycle
+
+`src/csp-hashes.json` is union-only: hashes accumulate so the two-pass build
+converges. This means a removed inline script's hash lingers in the policy
+until a manual regeneration. Periodically (notably after removing scripts),
+delete `src/csp-hashes.json`, run `npm run build` twice, and review the
+freshly computed file before committing it.
 - `'wasm-unsafe-eval'` is the single narrow, documented exception: Starlight
   search (Pagefind) executes a WebAssembly search index from same-origin files.
   It is exercised by the search browser tests (T07).

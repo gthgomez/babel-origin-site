@@ -43,6 +43,9 @@ jobs:
       - name: Validate built artifact
         run: npm run check:build
 
+      - name: Upstream source audit (read-only, informational)
+        run: npm run check:sources
+
       - name: Validate vercel.json
         run: node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
 
