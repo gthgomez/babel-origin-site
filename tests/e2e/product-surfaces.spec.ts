@@ -47,25 +47,32 @@ test.describe("tour", () => {
 test.describe("download", () => {
   test("unknown download has no binary CTA", async ({ page }) => {
     await page.goto("/download/");
-    const downloadLinks = await page.locator("a[href]", {
-      has: page.locator(".button, [class*=install]"),
-    });
-    // Every action href on the page must be either the source docs path, the
-    // status page, or a real public asset asserted by the snapshot.
-    const allowed = new Set([
-      "/docs/getting-started/install/",
-      "/status/",
-    ]);
-    const hrefs = await downloadLinks.evaluateAll((els) =>
-      els.map((e) => (e as HTMLAnchorElement).getAttribute("href"))
-    );
+    // Buttons/links may only exist for real actions: the source install path
+    // and genuinely available binary assets from the snapshot.
+    const allowed = new Set(["/docs/getting-started/install/"]);
+    const hrefs = await page
+      .locator(".actions a[href]")
+      .evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).getAttribute("href")));
+    expect(hrefs.length).toBeGreaterThan(0);
     for (const href of hrefs) {
       const ok =
         allowed.has(href!) ||
         snapshot.distributions.some(
-          (d: { assetUrl?: string }) => d.assetUrl === href
+          (d: { assetUrl?: string; availability: string }) =>
+            d.assetUrl === href && d.availability === "available"
         );
       expect(ok, `unexpected install action href ${href}`).toBe(true);
+    }
+    // Unavailable distributions are plain text, not click targets that
+    // pretend to install. Their label must not be an anchor; only the
+    // explicit "See status" pointer may link.
+    for (const dist of snapshot.distributions.filter(
+      (d: { kind: string; availability: string }) =>
+        d.kind !== "source" && d.availability !== "available"
+    )) {
+      const label = page.locator(".install-notices li", { hasText: dist.label });
+      await expect(label).toHaveCount(1);
+      await expect(label.locator("strong a")).toHaveCount(0);
     }
     // npm must be shown as unavailable.
     await expect(page.locator("body")).toContainText(/no published npm package/i);
