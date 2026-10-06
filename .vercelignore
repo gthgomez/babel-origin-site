@@ -1,2 +1,5 @@
-HARDENING_PLAN.md
-.server.pid
+.vercel
+dist
+node_modules
+test-results
+playwright-report

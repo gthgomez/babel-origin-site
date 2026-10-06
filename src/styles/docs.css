@@ -1,0 +1,21 @@
+/* Minimal Starlight theme overrides mapping the Babel token system. */
+:root {
+  --sl-color-bg: var(--bg, #0e1014);
+  --sl-color-bg-nav: var(--panel, #171b22);
+  --sl-color-bg-sidebar: var(--bg, #0e1014);
+  --sl-color-bg-accent: var(--panel-raised, #1d232c);
+  --sl-color-text: var(--text, #f3f1ec);
+  --sl-color-text-accent: var(--cyan, #78c6d8);
+  --sl-color-text-muted: var(--muted, #a9b1bd);
+  --sl-color-border: var(--border, #2a313c);
+  --sl-color-accent: var(--gold, #d7b45f);
+  --sl-color-accent-high: var(--gold-strong, #e6c572);
+  --sl-color-white: var(--text, #f3f1ec);
+  --sl-color-gray-1: var(--text, #f3f1ec);
+  --sl-color-gray-2: var(--muted, #a9b1bd);
+  --sl-color-gray-3: var(--muted, #a9b1bd);
+  --sl-color-gray-4: var(--border, #2a313c);
+  --sl-color-gray-5: var(--border, #2a313c);
+  --sl-color-gray-6: var(--panel, #171b22);
+  --sl-color-black: var(--bg, #0e1014);
+}

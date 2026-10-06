@@ -18,7 +18,7 @@ jobs:
   validate:
     name: Validate static site
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -27,39 +27,35 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          # This repo intentionally has no lockfile, so no npm cache is configured.
-
-      - name: Content check and build public/
-        run: npm run build
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Checks and unit tests
+        run: |
+          npm run check
+          npm test
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Validate built artifact
+        run: npm run check:build
 
       - name: Validate vercel.json
         run: node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
 
-      - name: Validate HTML
-        run: npx --yes html-validate@11.15.0 "public/**/*.html"
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
 
-      - name: Check links
-        uses: lycheeverse/lychee-action@v2
-        with:
-          fail: true
-          args: >-
-            --root-dir "${{ github.workspace }}/public"
-            --no-progress
-            --accept 100..=103,200..=299,429
-            './public/**/*.html'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Browser tests against built artifact
+        run: npm run test:e2e
 
       - name: Upload built site
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: public-site
-          path: public/
+          name: site-dist
+          path: dist/
           if-no-files-found: ignore
