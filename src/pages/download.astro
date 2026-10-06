@@ -5,7 +5,6 @@ import { parseProductSnapshot } from "../lib/product-content";
 import snapshotData from "../data/product-status.json";
 
 const snapshot = parseProductSnapshot(snapshotData);
-const source = snapshot.distributions.find((d) => d.kind === "source");
 const others = snapshot.distributions.filter((d) => d.kind !== "source");
 const AVAILABILITY: Record<string, string> = {
   available: "Available",

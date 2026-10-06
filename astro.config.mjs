@@ -98,7 +98,9 @@ export default defineConfig({
     },
   },
   build: {
-    inlineStylesheets: "auto",
+    // Keep stylesheets external so style-src 'self' holds without per-page
+    // style hash churn.
+    inlineStylesheets: "never",
   },
   security: {
     // Injects a per-page <meta http-equiv="Content-Security-Policy"> with

@@ -1,32 +1,46 @@
-# Babel Origin Site
+# Babel — Product Website & Docs
 
-Public-safe static Vercel origin for Babel. This is a front door for the public repo and bounded demo preview, not a production agent surface.
+Astro + Starlight static site for Babel Harness: product homepage, task-oriented
+documentation, and an honest status/download/changelog surface.
 
 > **Status: proprietary.** This repository is public for source visibility and
 > transparency. It is **not open source** — there is no license grant to reuse,
 > modify, or redistribute this code. See [LICENSE](LICENSE).
 
-## Local Use
+## Architecture
+
+- Marketing pages: `src/pages/` (Astro, static output to `dist/`)
+- Documentation: `src/content/docs/` (Starlight, 18 source-linked guides)
+- Product claims: `src/data/*.json` validated by `src/lib/product-content.ts`
+- Security: build-generated meta CSP with script hashes — see
+  [docs/security-decision.md](docs/security-decision.md)
+
+Product source of truth: [gthgomez/Babel](https://github.com/gthgomez/Babel).
+
+## Local use
 
 ```powershell
-npm run check
-npm run dev
+npm ci
+npm run verify
 ```
 
-The local server prints a `localhost` URL. Vercel can use:
+- `npm run dev` — dev server
+- `npm run build` — static production build → `dist/`
+- `npm run test:e2e` — Playwright against the built artifact
+- `npm run check:sources` — read-only upstream snapshot audit (never in build)
 
-- Framework preset: Other
-- Build command: `npm run build`
-- Output directory: `public`
-- Environment variables: none
+Vercel: framework Other, build `npm run build`, output `dist`, no environment
+variables.
 
-## Link Policy
+## Content rules
 
-- Use [https://github.com/gthgomez/Babel](https://github.com/gthgomez/Babel) as the public proof repo.
-- Use `/demo/` as the bounded demo preview route.
-- Do not claim production readiness, autonomous coding-agent reliability, fixed catalog counts, or live provider governance unless fresh public evidence exists.
+All product claims derive from the pinned snapshot in
+`src/data/product-status.json`. See
+[docs/content-maintenance.md](docs/content-maintenance.md) for the refresh
+procedure and [docs/security-decision.md](docs/security-decision.md) for the CSP
+design.
 
 ## License
 
-This site repository is publicly viewable as a Babel demo and proof surface. It is not open source. See [LICENSE](LICENSE) for permitted use. Babel and other third-party materials retain their own licenses.
-
+Proprietary; see [LICENSE](LICENSE). Babel and third-party materials retain
+their own licenses.

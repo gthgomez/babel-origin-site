@@ -31,7 +31,7 @@ const siteEdit = `https://github.com/gthgomez/babel-origin-site/edit/main/src/co
     Written from Babel source at revision <code>{shortSha}</code>:
   </p>
   <ul>
-    {sourcePaths.map((path) => (
+    {sourcePaths.map((path: string) => (
       <li><code><a href={`${babelTree}/${path}`}>{path}</a></code></li>
     ))}
   </ul>
