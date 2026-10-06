@@ -5,7 +5,7 @@
   "description": "Public-safe static origin site for the Babel demo and proof surfaces.",
   "scripts": {
     "dev": "astro dev",
-    "check": "astro check",
+    "check": "astro check && node scripts/check-content.ts",
     "test": "vitest run",
     "build": "astro build && node scripts/refresh-csp-hashes.mjs && astro build",
     "preview": "astro preview",
