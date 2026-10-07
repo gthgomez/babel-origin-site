@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-10-07",
+    "category": "release",
+    "title": "v0.1.1 — first public Babel Desktop download (unsigned preview)",
+    "summary": "First release with downloadable artifacts: the Windows portable bundle (Desktop shell + bundled CLI + pinned Node runtime), its SHA256SUMS and file manifest, and the babel-harness CLI package tarball. The bundle is an unsigned preview.",
+    "revision": "ccf6aa9e67beeff81cf3604686c3ffcad1a86416",
+    "sourceUrl": "https://github.com/gthgomez/Babel/releases/tag/v0.1.1"
+  },
+  {
     "date": "2026-07-23",
     "category": "release",
     "title": "v0.1.0 — first public pre-1.0 source release",

@@ -1,10 +1,10 @@
 ---
 title: Desktop
-description: The Electron Desktop shell — what the source provides, what the Windows portable preview includes, and what is explicitly unqualified.
+description: The Electron Desktop shell — the published v0.1.1 Windows portable bundle, what it includes, and what is explicitly unqualified.
 slug: docs/interfaces/desktop
 pageType: reference
-sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
-reviewedAt: 2026-10-06
+sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
+reviewedAt: 2026-10-07
 interfaces:
   - Desktop
 prerequisites:
@@ -19,13 +19,15 @@ import DocsSourceNote from "../../../components/DocsSourceNote.astro";
 Babel Desktop is an Electron visual shell for the Babel Harness. The real
 work still runs the Babel CLI underneath; Desktop is the window around it.
 
-## No public download
+## Downloading (v0.1.1, unsigned preview)
 
-There is **no published Desktop download**. The Windows x64 portable bundle
-is a contributor-built artifact produced from source (the builder pins Node
-24.13.1 and Electron, verifies archive SHA256 values, and emits BUILD.json
-plus SHA256SUMS). It is **unsigned**. See
-[Get Babel](/download/) for the supported install path today.
+The Windows x64 portable bundle is **published on the v0.1.1 GitHub release** —
+see [Get Babel](/download/). The builder pins Node 24.13.1 and Electron,
+verifies archive SHA256 values, and emits BUILD.json plus SHA256SUMS; the
+release asset is an **unsigned preview**, so Windows SmartScreen will warn.
+No code-signing identity, installer, Start Menu registration, automated
+updater, or Settings-based uninstaller is provided yet — to remove it, quit
+the app and delete the extracted folder.
 
 ## The opening screen is a reference preview
 

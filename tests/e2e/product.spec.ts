@@ -48,7 +48,7 @@ test.describe("homepage product assertions", () => {
     // The desktop card must not read as a released download.
     const desktopCard = section.locator(".card", { hasText: "Desktop shell" });
     await expect(desktopCard).toContainText("Preview");
-    await expect(desktopCard).toContainText("not a published download");
+    await expect(desktopCard).toContainText("unsigned");
     const source = section.getByRole("link", { name: "product source" });
     await expect(source).toHaveAttribute(
       "href",

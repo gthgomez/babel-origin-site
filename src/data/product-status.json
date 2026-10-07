@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "repository": "https://github.com/gthgomez/Babel",
-  "sourceRevision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
-  "reviewedAt": "2026-10-06",
+  "sourceRevision": "ccf6aa9e67beeff81cf3604686c3ffcad1a86416",
+  "reviewedAt": "2026-10-07",
   "features": [
     {
       "id": "chat",
@@ -14,7 +14,9 @@
         "Ordinary coding-loop reliability is under active qualification.",
         "Provider-backed sessions require local credentials and a working provider; quality varies by model."
       ],
-      "evidenceIds": ["src-chat-entrypoint"]
+      "evidenceIds": [
+        "src-chat-entrypoint"
+      ]
     },
     {
       "id": "plan",
@@ -26,7 +28,9 @@
         "Planning behavior boundaries are documented in the product source.",
         "No live workflow qualification is claimed."
       ],
-      "evidenceIds": ["src-plan-entrypoint"]
+      "evidenceIds": [
+        "src-plan-entrypoint"
+      ]
     },
     {
       "id": "deep",
@@ -38,7 +42,9 @@
         "Still maturing; route availability is not a reliability ranking.",
         "Deep is not a blanket reliability upgrade over Chat."
       ],
-      "evidenceIds": ["src-deep-entrypoint"]
+      "evidenceIds": [
+        "src-deep-entrypoint"
+      ]
     },
     {
       "id": "doctor",
@@ -49,7 +55,9 @@
       "limitations": [
         "Output is diagnostic; a clean doctor report is not a coding-reliability score."
       ],
-      "evidenceIds": ["src-doctor-entrypoint"]
+      "evidenceIds": [
+        "src-doctor-entrypoint"
+      ]
     },
     {
       "id": "desktop",
@@ -58,10 +66,12 @@
       "qualification": "source_inspected",
       "scope": "Electron Desktop shell and a Windows portable bundle builder exist in source; the opening screen is an explicitly labeled reference preview.",
       "limitations": [
-        "The portable bundle is unsigned and contributor-built; it is not a published download.",
-        "Installer, uninstaller integration, signing, and automatic updates are unimplemented."
+        "The published v0.1.1 portable bundle is unsigned; Windows SmartScreen will warn.",
+        "Installer, uninstaller integration via Settings, signing, and automatic updates remain unimplemented."
       ],
-      "evidenceIds": ["src-desktop-readme"]
+      "evidenceIds": [
+        "src-desktop-readme"
+      ]
     },
     {
       "id": "execution-profiles",
@@ -73,7 +83,9 @@
         "The default safe_repo profile fail-closes without Docker.",
         "dev_local permits intrinsic inspection commands only; project-code tests/builds are denied without isolation."
       ],
-      "evidenceIds": ["src-execution-profiles"]
+      "evidenceIds": [
+        "src-execution-profiles"
+      ]
     },
     {
       "id": "mcp-inspection",
@@ -81,8 +93,12 @@
       "availability": "source_only",
       "qualification": "source_inspected",
       "scope": "A read-only MCP inspection entrypoint exists for control-plane style inspection.",
-      "limitations": ["Inspection surface only; not a general execution API."],
-      "evidenceIds": ["src-status-doc"]
+      "limitations": [
+        "Inspection surface only; not a general execution API."
+      ],
+      "evidenceIds": [
+        "src-status-doc"
+      ]
     },
     {
       "id": "coding-loop-reliability",
@@ -94,7 +110,9 @@
         "No general reliability claim is made or implied anywhere on this site.",
         "Scoped test passes are not a live-model quality score."
       ],
-      "evidenceIds": ["src-status-doc"]
+      "evidenceIds": [
+        "src-status-doc"
+      ]
     }
   ],
   "distributions": [
@@ -105,7 +123,9 @@
       "availability": "available",
       "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
       "signingState": "not_applicable",
-      "evidenceIds": ["src-readme-install"]
+      "evidenceIds": [
+        "src-readme-install"
+      ]
     },
     {
       "id": "npm-package",
@@ -114,16 +134,23 @@
       "availability": "not_available",
       "reason": "No published npm package exists today. The documented install path is clone + build.",
       "signingState": "not_applicable",
-      "evidenceIds": ["src-readme-install"]
+      "evidenceIds": [
+        "src-readme-install"
+      ]
     },
     {
       "id": "desktop-windows-portable",
       "kind": "portable",
       "label": "Windows portable bundle (Desktop shell + CLI)",
-      "availability": "not_available",
-      "reason": "The unsigned Windows portable bundle can be built by contributors from source; it is not published as a public download and has not completed installer lifecycle qualification.",
+      "availability": "available",
       "signingState": "unsigned",
-      "evidenceIds": ["src-desktop-readme"]
+      "evidenceIds": [
+        "release-v011",
+        "src-desktop-readme"
+      ],
+      "version": "v0.1.1",
+      "assetUrl": "https://github.com/gthgomez/Babel/releases/download/v0.1.1/Babel-Desktop-0.1.1-win-x64.zip",
+      "checksum": "sha256:d67c5ff3aca3be91619ffa1add312f69b4a6e2bf18ce6d38d18d3f8a02b8574f"
     },
     {
       "id": "github-release-v0.1.0",
@@ -133,7 +160,9 @@
       "version": "v0.1.0",
       "reason": "Release v0.1.0 (2026-07-23) is a source tag only — it carries no downloadable assets.",
       "signingState": "not_applicable",
-      "evidenceIds": ["release-v010"]
+      "evidenceIds": [
+        "release-v010"
+      ]
     }
   ],
   "evidence": [
@@ -207,6 +236,13 @@
       "url": "https://github.com/gthgomez/Babel/releases/tag/v0.1.0",
       "observationDate": "2026-10-06",
       "supports": "Release v0.1.0 exists as a tag with zero published assets (observed via GitHub API)."
+    },
+    {
+      "id": "release-v011",
+      "kind": "release",
+      "url": "https://github.com/gthgomez/Babel/releases/tag/v0.1.1",
+      "observationDate": "2026-10-07",
+      "supports": "Public v0.1.1 release with the Windows portable bundle (SHA256SUMS verified independently), file manifest, and CLI tarball. Unsigned preview."
     }
   ]
 }

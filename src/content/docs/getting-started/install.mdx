@@ -19,9 +19,13 @@ sourcePaths:
 
 import DocsSourceNote from "../../../components/DocsSourceNote.astro";
 
-Babel is **not published as an npm package and has no public binary download**.
-The supported installation path is a source clone. Anything else you may find
-(an `npm install babel`-style command, an installer) is not Babel Harness.
+Babel is **not published as an npm package**. The supported CLI installation
+path is a source clone — anything else you may find (an `npm install babel`-style
+command) is not Babel Harness. For Desktop there is now a published
+**unsigned Windows portable bundle** on the
+[v0.1.1 release](https://github.com/gthgomez/Babel/releases/tag/v0.1.1); see
+[Desktop](/docs/interfaces/desktop/) for its scope, and
+[Get Babel](/download/) for all distribution states.
 
 ## 1. Clone and build
 
@@ -62,10 +66,11 @@ the install. Exit zero is not the only legitimate documented outcome.
 
 ## 3. What about Desktop?
 
-The Electron Desktop shell and an unsigned Windows portable bundle builder
-exist in the source tree, but **no Desktop download is published**. See
-[Desktop](/docs/interfaces/desktop/) for what exists and what is explicitly
-unqualified.
+An **unsigned Windows portable bundle** is published on the
+[v0.1.1 release](https://github.com/gthgomez/Babel/releases/tag/v0.1.1) —
+no source checkout or npm needed. See [Desktop](/docs/interfaces/desktop/)
+for what it includes and what is explicitly unqualified (signing, installer,
+auto-update).
 
 ## Requirements recap
 

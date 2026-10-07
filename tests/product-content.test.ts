@@ -10,7 +10,7 @@ import snapshot from "../src/data/product-status.json";
 import changelog from "../src/data/changelog.json";
 import { parseChangelogForTest } from "./helpers";
 
-const TODAY = "2026-10-06";
+const TODAY = "2026-10-07";
 
 const baseFeature = {
   id: "chat",
@@ -143,7 +143,7 @@ describe("missing evidence is not verified", () => {
 describe("review date is not build date", () => {
   it("a future review date is rejected with an injected today", () => {
     const snap = baseSnapshot();
-    snap.reviewedAt = "2026-10-07";
+    snap.reviewedAt = "2026-10-08";
     expect(() => parseProductSnapshot(snap, { today: TODAY })).toThrow(/future/);
   });
 
