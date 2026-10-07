@@ -3,7 +3,7 @@ title: Babel Docs
 description: Start here — choose installation, daily use, troubleshooting, or deeper concepts.
 slug: docs
 pageType: concept
-sourceRevision: cf17c00da3c51678fd010ed645224686dcea94b0
+sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
 reviewedAt: 2026-10-06
 sourcePaths:
   - README.md

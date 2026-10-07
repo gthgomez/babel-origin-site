@@ -1,8 +1,10 @@
 # Upstream follow-ups — Babel product source
 
 Concrete documentation contradictions observed in `gthgomez/Babel` at
-`cf17c00da3c51678fd010ed645224686dcea94b0` (reviewed 2026-10-06). The site campaign
-does not repair the Babel runtime; these are recorded so they can be delivered as
+`cf17c00da3c51678fd010ed645224686dcea94b0` and rechecked on 2026-10-06 at
+`2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3`. The cited files are unchanged between
+those revisions, so the contradictions still stand. The site campaign does not
+repair the Babel runtime; these are recorded so they can be delivered as
 separate, authorized docs-only upstream changes.
 
 ## UF-1: `dev_local` is documented as day-to-day host coding but denies project-code tests/builds
@@ -39,7 +41,7 @@ enforcement tests.
 
 ## UF-2: Site-facing status claims are undated and unscoped
 
-`docs/STATUS.md` at `cf17c00` describes features without qualification dates or
+`docs/STATUS.md`, unchanged at `2aa0200d`, describes features without qualification dates or
 evidence links. When the site links a Babel status doc, readers cannot tell what was
 verified, when, or how. Proposal: date-stamp and scope each capability claim in
 `docs/STATUS.md`, or expose a machine-readable snapshot the site can pin.

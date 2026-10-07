@@ -49,6 +49,11 @@ test.describe("homepage product assertions", () => {
     const desktopCard = section.locator(".card", { hasText: "Desktop shell" });
     await expect(desktopCard).toContainText("Preview");
     await expect(desktopCard).toContainText("not a published download");
+    const source = section.getByRole("link", { name: "product source" });
+    await expect(source).toHaveAttribute(
+      "href",
+      `https://github.com/gthgomez/Babel/blob/${snapshot.sourceRevision}/README.md`
+    );
   });
 
   test("page has no horizontal overflow", async ({ page }) => {

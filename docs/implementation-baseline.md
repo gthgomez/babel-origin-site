@@ -10,10 +10,11 @@ Packet: Babel_Site_Agent_Packet (2026-10-06). Spec and plan are retained under
 | --- | --- |
 | Site base SHA (main) | `d60c17eb816786a712fef5fda7af6a93b1331a0e` |
 | Site base HEAD verified | Yes — clean clone; matches packet snapshot exactly |
-| Babel main SHA (product source of truth) | `cf17c00da3c51678fd010ed645224686dcea94b0` |
+| Babel main SHA at campaign start | `cf17c00da3c51678fd010ed645224686dcea94b0` |
+| Babel main SHA after 2026-10-06 review | `2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3` |
 | Babel reference clone | Local read-only clone of `github.com/gthgomez/Babel` |
-| Babel PR #308 (installer lifecycle) | Observed 2026-10-06 as OPEN, DRAFT, not merged. Not release evidence. |
-| Babel PR #309 (chat reliability) | Observed 2026-10-06 as OPEN, not merged, based on a campaign branch. Not release evidence. |
+| Babel PR #308 (installer lifecycle) | Observed 2026-10-06 as OPEN, DRAFT, not merged. Not release evidence. Later superseded by open PR #313; still not merged and still not a public download. |
+| Babel PR #309 (chat reliability) | Observed 2026-10-06 as OPEN. The campaign later landed on main as `2aa0200d`. That is source on main, not a live coding qualification or a public binary. |
 | Site open PRs at baseline | None (all three historical PRs merged) |
 | Snapshot review date | 2026-10-06 |
 

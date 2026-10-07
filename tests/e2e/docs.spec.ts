@@ -82,6 +82,6 @@ test.describe("documentation integrity", () => {
     expect(await edit.getAttribute("href")).toContain("github.com/gthgomez/babel-origin-site");
     expect(await source.getAttribute("href")).toContain("github.com/gthgomez/Babel/");
     // Source links are pinned to a full revision.
-    expect(await source.getAttribute("href")).toMatch(/cf17c00da3c51678fd010ed645224686dcea94b0/);
+    expect(await source.getAttribute("href")).toMatch(/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/);
   });
 });
