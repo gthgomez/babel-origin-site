@@ -1,0 +1,55 @@
+---
+import MarketingLayout from "../layouts/MarketingLayout.astro";
+import { siteRepoUrl } from "../lib/site-repo";
+---
+<MarketingLayout
+  title="Security — Babel site"
+  description="Security boundaries of this website and how they differ from the Babel product's own security surface."
+  canonicalPath="/security"
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Security</p>
+      <h1>Two distinct boundaries.</h1>
+      <p class="lede">
+        This website and the Babel product have separate security surfaces.
+        Nothing here extends the product's terms or promises.
+      </p>
+    </div>
+  </section>
+
+  <section class="band">
+    <h2>This website</h2>
+    <ul>
+      <li>Static files only: no server runtime, no database, no forms, no secrets, no telemetry.</li>
+      <li>Strict CSP delivered as build-generated meta policy — no <code>unsafe-inline</code> or <code>unsafe-eval</code>; the single narrow exception is <code>'wasm-unsafe-eval'</code> for same-origin search (Pagefind).</li>
+      <li>Response headers on every route: <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy: strict-origin-when-cross-origin</code>.</li>
+      <li>Same-origin resources by default; normal page loads make no provider, GitHub, or analytics requests.</li>
+      <li>Proprietary site source; see the <a href={siteRepoUrl("blob/LICENSE")}>LICENSE</a> and the repository <a href={siteRepoUrl("blob/SECURITY.md")}>SECURITY.md</a>.</li>
+    </ul>
+  </section>
+
+  <section class="band">
+    <h2>The Babel product</h2>
+    <ul>
+      <li>Babel Harness is a separate repository with its own documentation, license, and security posture.</li>
+      <li>It is local software; you configure providers and execution policy yourself. Local execution does not mean local model inference, and provider-backed runs send project content to your configured provider.</li>
+      <li>Execution isolation (Docker sandbox, fail-closed profiles) is a product boundary — see <a href="/docs/safety/execution-profiles/">execution profiles</a>.</li>
+      <li>No compliance certification (SOC 2, ISO, or similar) is claimed for the product or this site.</li>
+    </ul>
+  </section>
+
+  <section class="band">
+    <h2>Reporting</h2>
+    <p>
+      For this website, use
+      <a href="https://github.com/gthgomez/babel-origin-site/security/advisories/new">GitHub private vulnerability reporting</a>
+      if available, or contact the repository owner through the public profile.
+      Do not open public issues with exploit details.
+    </p>
+    <p>
+      Concerns about the Babel product belong to the
+      <a href="https://github.com/gthgomez/Babel/security">Babel repository</a>.
+    </p>
+  </section>
+</MarketingLayout>

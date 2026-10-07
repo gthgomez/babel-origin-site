@@ -1,7 +1,9 @@
-.server.pid
-.vercel/
-public/
-HARDENING_PLAN.md
-
-.vercel
+dist/
 node_modules/
+.vercel/
+.server.pid
+test-results/
+playwright-report/
+HARDENING_PLAN.md
+.astro/
+shots/

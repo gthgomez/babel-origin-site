@@ -1,0 +1,64 @@
+---
+title: What verification means
+description: Evidence, outcome labels, and what they do and do not prove in Babel.
+slug: docs/verification/overview
+pageType: concept
+sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
+reviewedAt: 2026-10-06
+interfaces:
+  - TUI
+  - CLI
+sourcePaths:
+  - docs/CHAT_MODE.md
+  - docs/STATUS.md
+  - babel-cli/src/agent/completionGatePolicy.ts
+  - babel-cli/src/executor/kernel.ts
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Babel's design goal is that completion claims are checked by the harness, not
+taken from the model's confidence.
+
+## The honesty gate
+
+In chat mode, a model "I'm done" answer is not accepted as success by itself:
+
+1. Execute tasks typically need successful writes plus policy-dependent
+   verification.
+2. Only **authoritative** verifier commands — your project's real test
+   runners — may green completion. Package installs and ad-hoc
+   `_verify*` scripts do not.
+3. Verifier-dependency tampering (repeated edits to tracked verifier scripts
+   or `package.json` scripts) can block completion.
+4. A requested verified-complete outcome can be **downgraded** by the shared
+   executor kernel, which is the terminal authority.
+
+## Outcome labels
+
+- **Verified** — the required verification actually ran and passed in this
+  session.
+- **Unverified patch** — changes exist; authoritative verification did not
+  substantively run. Treat as unfinished.
+- **Blocked** — the harness stopped the session (isolation unavailable,
+  tamper detection, budget limits). This is the policy working, not a crash.
+
+Exit code honesty: exit 0 corresponds to verified/unverified-patch terminal
+outcomes per the product's contract — a zero exit alone is not a proof of
+correct code.
+
+## What this does not prove
+
+- A verified outcome is scoped to the checks that ran, in that environment.
+  It is not a general guarantee about the code.
+- Scoped test passes are not a live-model quality score.
+- Ordinary coding-loop reliability remains under active qualification
+  upstream; see the product's [status documentation](https://github.com/gthgomez/Babel/blob/main/docs/STATUS.md).
+
+<DocsSourceNote
+  pageType="concept"
+  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/CHAT_MODE.md", "docs/STATUS.md", "babel-cli/src/agent/completionGatePolicy.ts", "babel-cli/src/executor/kernel.ts"]}
+  interfaces={["TUI", "CLI"]}
+/>

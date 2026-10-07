@@ -1,0 +1,75 @@
+---
+import MarketingLayout from "../layouts/MarketingLayout.astro";
+import { parseChangelogEntries } from "../lib/product-content";
+import changelogData from "../data/changelog.json";
+
+const entries = parseChangelogEntries(changelogData).sort((a, b) =>
+  a.date < b.date ? 1 : -1
+);
+---
+<MarketingLayout
+  title="Changelog — Babel"
+  description="Dated release entries and development milestones for Babel Harness. Development milestones are explicitly not public releases."
+  canonicalPath="/changelog"
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Changelog</p>
+      <h1>Releases and development milestones.</h1>
+      <p class="lede">
+        Entries come from reviewed local records, with the actual release or
+        merge dates. Development milestones are visible but are
+        <strong>not</strong> public binary releases.
+      </p>
+    </div>
+  </section>
+
+  <section class="band">
+    <ul class="changelog-list">
+      {entries.map((entry) => (
+        <li class={`changelog-entry ${entry.category}`}>
+          <p class="changelog-date">
+            <time datetime={entry.date}>{entry.date}</time>
+            <span class={`status-pill ${entry.category === "release" ? "released" : ""}`}>
+              {entry.category === "release" ? "Release" : "Development — not a release"}
+            </span>
+          </p>
+          <h2>{entry.title}</h2>
+          <p>{entry.summary}</p>
+          <p class="changelog-source">
+            <a href={entry.sourceUrl}>source</a>
+            {entry.revision && <span> · revision <code>{entry.revision.slice(0, 12)}</code></span>}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</MarketingLayout>
+
+<style>
+  .changelog-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .changelog-entry {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+  }
+  .changelog-entry h2 {
+    font-size: 1.15rem;
+    margin: 8px 0;
+  }
+  .changelog-date {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  .changelog-source {
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+</style>

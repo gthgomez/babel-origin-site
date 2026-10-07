@@ -1,0 +1,50 @@
+---
+title: Interfaces overview
+description: Desktop, terminal TUI, headless CLI, and the read-only MCP inspection entrypoint — what each is and how they differ.
+slug: docs/interfaces/overview
+pageType: concept
+sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
+reviewedAt: 2026-10-06
+interfaces:
+  - Desktop
+  - TUI
+  - CLI
+  - MCP
+sourcePaths:
+  - README.md
+  - docs/CHAT_MODE.md
+  - babel-desktop/README.md
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Babel is one product with several surfaces. These are interfaces to the same
+harness — not separate products with separate runtimes.
+
+| Surface | What it is | Today's state |
+| --- | --- | --- |
+| **Terminal TUI** (`interactive`) | The primary interface: multi-turn chat/plan/deep in your terminal | Present in source; the daily path |
+| **Headless CLI** (`chat --headless`, `run`) | The same chat engine with JSON output for scripts and CI | Present in source |
+| **Desktop shell** (Electron) | Visual shell around the CLI; project picker, streaming run view | Present in source; portable bundle is contributor-built and unsigned — no public download |
+| **MCP inspection** (`mcp`) | Read-only control-plane server for other tools | Present in source; inspection only |
+
+## How they relate
+
+- The Desktop shell runs the sibling Babel CLI for real work; it does not
+  reimplement the agent.
+- Headless output is a mode of the same engine, not a second product.
+- The MCP entrypoint is deliberately read-only — it is not the everyday
+  coding entrypoint.
+
+## What each page covers
+
+- [Desktop](/docs/interfaces/desktop/) — the shell, its bundled runtime, and its explicit limits.
+- The TUI and headless surfaces are covered throughout [Using Babel](/docs/using-babel/chat/).
+
+<DocsSourceNote
+  pageType="concept"
+  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
+  reviewedAt="2026-10-06"
+  sourcePaths={["README.md", "docs/CHAT_MODE.md", "babel-desktop/README.md"]}
+  interfaces={["Desktop", "TUI", "CLI", "MCP"]}
+/>

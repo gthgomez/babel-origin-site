@@ -1,0 +1,61 @@
+---
+title: Deep
+description: A higher-ceremony governed pipeline with adversarial review and execution structure — with explicit limitations.
+slug: docs/using-babel/deep
+pageType: guide
+sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+prerequisites:
+  - Quickstart
+sourcePaths:
+  - docs/CHAT_MODE.md
+  - docs/STATUS.md
+  - babel-cli/src/interactive/execution/dispatch.ts
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Deep mode is Babel's higher-ceremony path: it loads the governed pipeline
+(OLS v9), an adversarial QA reviewer, and the CLI executor with verification
+gates.
+
+```powershell
+node .\babel-cli\dist\index.js deep "Harden the migration path and verify it"
+```
+
+## What Deep adds over Chat
+
+- An orchestrator and pipeline stages (QA review, executor loop).
+- A verifier contract finalize step rather than the chat honesty gate alone.
+- More structure intended for riskier changes.
+
+## What Deep does **not** guarantee
+
+This is important and stated in the product's own status documentation:
+
+- **Deep is not a blanket reliability upgrade.** Route availability does not
+  mean Deep is more reliable than chat for ordinary tasks.
+- Deep is still maturing. It is under the same active-qualification boundary
+  as the rest of the ordinary coding loop.
+- More ceremony means more time and more provider cost per task, not a
+  correctness score.
+
+## When to reach for Deep
+
+- Changes where an independent adversarial review pass is worth its cost.
+- Tasks where you want the full governed pipeline's gates, not just the chat
+  completion honesty gate.
+
+Otherwise start with [Chat](/docs/using-babel/chat/) or
+[Plan](/docs/using-babel/plan/).
+
+<DocsSourceNote
+  pageType="guide"
+  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/CHAT_MODE.md", "docs/STATUS.md"]}
+  interfaces={["CLI"]}
+  prerequisites={["Quickstart"]}
+/>

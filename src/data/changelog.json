@@ -1,0 +1,18 @@
+[
+  {
+    "date": "2026-07-23",
+    "category": "release",
+    "title": "v0.1.0 — first public pre-1.0 source release",
+    "summary": "First public source tag of Babel. The release tag carries no downloadable assets; install remains clone + build.",
+    "revision": "4629bd39d5996086d57fc24dc56e6bbf644fb788",
+    "sourceUrl": "https://github.com/gthgomez/Babel/releases/tag/v0.1.0"
+  },
+  {
+    "date": "2026-10-04",
+    "category": "development",
+    "title": "Windows runtime and first-launch packaging merged (PR #306)",
+    "summary": "Desktop packaging work landed on main. This is a source milestone only: no public Desktop download or installer qualification exists yet.",
+    "revision": "cf17c00da3c51678fd010ed645224686dcea94b0",
+    "sourceUrl": "https://github.com/gthgomez/Babel/pull/306"
+  }
+]

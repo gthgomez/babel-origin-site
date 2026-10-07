@@ -1,0 +1,69 @@
+---
+title: CLI reference
+description: The documented command surface of the Babel CLI, with links to the canonical source definitions.
+slug: docs/reference/cli
+pageType: reference
+sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
+reviewedAt: 2026-10-06
+interfaces:
+  - CLI
+prerequisites:
+  - Install from source
+sourcePaths:
+  - docs/CLI_QUICKSTART.md
+  - docs/CHAT_MODE.md
+  - babel-cli/src/cli/sharedOptions.ts
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+All commands are invoked from the Babel repository root after a source build
+as `node .\babel-cli\dist\index.js <command>` (or `node ./babel-cli/dist/index.js`
+on macOS/Linux). `babel` is not assumed to be on PATH. `/help` inside the TUI
+is canonical for in-session commands.
+
+## Commands documented in the product source
+
+| Command | Purpose |
+| --- | --- |
+| `interactive` (or bare invocation) | Start the interactive TUI/REPL; default mode chat. |
+| `"<task>"` | One-shot chat task (default `--mode chat`). |
+| `run "<task>"` | Explicit run; supports `--mode`, `--headless`, `--execution-profile`. |
+| `chat --headless "<task>"` | Headless chat with JSON output for scripts/CI. |
+| `plan "<task>"` | Plan-then-approve path. |
+| `deep "<task>"` | Governed pipeline with adversarial review. |
+| `doctor` | Environment diagnostics; no provider key needed. |
+| `setup --json` | Machine-readable setup state. |
+| `models ping --json` | Check a configured provider (needs credentials). |
+| `resume` | Continue an earlier conversation. |
+| `undo` | Restore the last checkpoint (CLI only — the TUI has no `/undo`). |
+| `mcp` | Read-only MCP control-plane server for other tools. |
+| `remote serve --port N --project PATH` | Experimental loopback JSON-RPC server (127.0.0.1 only). Not part of first-run. |
+
+## Modes
+
+| Mode | Engine | Best for |
+| --- | --- | --- |
+| `chat` | ChatEngine multi-turn loop | Daily coding |
+| `chat-headless` | Same engine, JSON output | Scripts, CI |
+| `plan` | Governed plan path | Reviewable plan before apply |
+| `deep` | Full governed pipeline | Higher-risk work with more structure |
+
+Legacy mode names (`verified`, `autonomous`, `manual`, `direct`, `default`)
+are accepted as aliases with deprecation warnings. Do not use them in new
+scripts.
+
+## Scope of this page
+
+This reference covers what the product documentation documents at the pinned
+revision. It is not an exhaustive flag catalog; check `--help` on any command
+and the cited source files for authoritative details.
+
+<DocsSourceNote
+  pageType="reference"
+  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/CLI_QUICKSTART.md", "docs/CHAT_MODE.md", "babel-cli/src/cli/sharedOptions.ts"]}
+  interfaces={["CLI"]}
+  prerequisites={["Install from source"]}
+/>

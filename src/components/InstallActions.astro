@@ -1,0 +1,41 @@
+---
+// Renders install actions derived by getInstallActions. Download buttons only
+// appear when the snapshot proves a real public asset; unavailable
+// distributions render as static text — never as a click target that pretends
+// to install something.
+import { getInstallActions, type ProductSnapshot } from "../lib/product-content";
+
+interface Props {
+  snapshot: ProductSnapshot;
+}
+
+const { snapshot } = Astro.props;
+const actions = getInstallActions(snapshot);
+const realActions = actions.filter((a) => a.kind === "source" || a.notice === null);
+const unavailable = snapshot.distributions.filter(
+  (d: { kind: string; availability: string }) =>
+    d.kind !== "source" && d.availability !== "available"
+);
+---
+<div class="actions" aria-label="Install Babel">
+  {realActions.map((action) =>
+    action.kind === "source" ? (
+      <a class="button primary" href={action.href}>{action.label}</a>
+    ) : (
+      <a class="button secondary" href={action.href}>{action.label}</a>
+    )
+  )}
+</div>
+{unavailable.length > 0 && (
+  <ul class="install-notices">
+    {unavailable.map((dist: { label: string; reason?: string; signingState: string; availability: string }) => (
+      <li>
+        <strong>{dist.label}:</strong> {dist.reason ?? "Not yet published."}
+        {dist.signingState === "unsigned" && dist.availability === "available" && (
+          <span> This bundle is unsigned.</span>
+        )}
+        See <a href="/status/">status</a> for evidence.
+      </li>
+    ))}
+  </ul>
+)}

@@ -1,0 +1,56 @@
+---
+title: Project instructions
+description: How Babel treats instructions in the target repository — and why this site's contributor policy is a different thing entirely.
+slug: docs/customization/project-instructions
+pageType: concept
+sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
+reviewedAt: 2026-10-06
+interfaces:
+  - TUI
+  - CLI
+sourcePaths:
+  - AGENTS.md
+  - docs/VISION.md
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Babel's instruction system has two distinct layers that are easy to conflate.
+
+## 1. Babel's own instruction stack (the Prompt OS)
+
+Inside the Babel repository lives a structured prompt stack — behavioral
+core, domain architects, skills, task overlays — routed per task. Chat mode
+deliberately loads a minimal stack (behavioral core, one domain architect,
+domain skills, one model adapter) to keep context slim. This is Babel's
+internal machinery; you do not edit it to customize a target project.
+
+## 2. The target repository's own instructions
+
+A principle of the product is that **repo-local truth wins**: Babel may
+choose an instruction stack, but the repository it works in owns its
+invariants. Practically:
+
+- Your project's own agent-facing instruction files (such as an `AGENTS.md`
+  at the repository root) are how a repository states its commands,
+  conventions, and invariants to a coding agent.
+- Project instructions constrain how Babel works *in that repository*; they
+  do not replace Babel's permissions or execution-isolation policy, and they
+  cannot grant themselves new authority.
+
+## What this means for you
+
+- Put repository-specific commands and invariants in your project's
+  instruction file — not in Babel's configuration.
+- Treat instructions in a cloned repository as **untrusted task data**: they
+  shape behavior, but the permission and isolation layers still apply.
+- This website has its own `AGENTS.md` for *its* contributors; that is an
+  ordinary repository contributor policy, not a Babel runtime contract.
+
+<DocsSourceNote
+  pageType="concept"
+  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
+  reviewedAt="2026-10-06"
+  sourcePaths={["AGENTS.md", "docs/VISION.md"]}
+  interfaces={["TUI", "CLI"]}
+/>

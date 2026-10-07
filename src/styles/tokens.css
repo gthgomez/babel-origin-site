@@ -1,0 +1,107 @@
+/* Babel product site design tokens — X-brand identity:
+   deep black, electric blue neon, bracket-robot mark. */
+:root {
+  --bg: #05070b;
+  --panel: #0d1117;
+  --panel-raised: #121722;
+  --border: #1e2733;
+  --text: #f2f5f9;
+  --muted: #8b98a9;
+  --accent: #4da3ff;
+  --accent-strong: #7cbcff;
+  --accent-glow: rgba(77, 163, 255, 0.35);
+  --accent-deep: #1f5fd0;
+  --cyan: #37e0ff;
+  --success: #3fd68c;
+  --warning: #e5b45b;
+  --failure: #ff6b5e;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 96px;
+
+  --radius: 8px;
+  --radius-lg: 14px;
+  --max-width: 1200px;
+  --prose-width: 72ch;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", Consolas, "SF Mono", Menlo, monospace;
+}
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* Subtle blueprint grid + blue radial glow, echoing the X banner. */
+  background-image:
+    radial-gradient(1100px 480px at 70% -10%, rgba(38, 84, 190, 0.22), transparent 70%),
+    linear-gradient(rgba(77, 163, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 163, 255, 0.035) 1px, transparent 1px);
+  background-size: auto, 42px 42px, 42px 42px;
+}
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+}
+
+a {
+  color: var(--accent);
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--panel-raised);
+  color: var(--text);
+  padding: var(--space-2) var(--space-3);
+  z-index: 100;
+  border-radius: 0 0 var(--radius) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

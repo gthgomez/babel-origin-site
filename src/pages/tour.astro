@@ -1,0 +1,198 @@
+---
+import MarketingLayout from "../layouts/MarketingLayout.astro";
+
+// Product tour: an illustrative, clearly labeled interface walkthrough.
+// Every panel carries the reference label; there is no live execution and no
+// provider dispatch anywhere on this page. All panels are server-rendered into
+// the DOM so the content is readable without JavaScript; tabs enhance only.
+const sections = [
+  {
+    id: "chat",
+    label: "Chat",
+    title: "Chat — the daily default",
+    description:
+      "A multi-turn conversational loop with visible tool activity. Babel reads, edits, and verifies — you approve at each step that needs it.",
+    transcript: [
+      "You",
+      "  Fix the failing webhook retry test.",
+      "",
+      "Babel",
+      "  ▸ Read src/webhooks/handler.ts",
+      "  ▸ Read tests/webhooks/handler.test.ts",
+      "  ▸ Edited src/webhooks/handler.ts",
+      "  ▸ npm test -- webhook",
+      "  ✓ 18 passed",
+      "",
+      "  Completed · 1 file changed · verified",
+    ],
+  },
+  {
+    id: "plan",
+    label: "Plan",
+    title: "Plan — a gate before mutation",
+    description:
+      "Plan produces a reviewable plan first. Nothing is applied until you approve it in your session.",
+    transcript: [
+      "You",
+      "  babel plan \"Split the auth module safely\"",
+      "",
+      "Babel",
+      "  Plan (2 steps)",
+      "  1. Extract session helpers into auth/session.ts",
+      "  2. Update call sites; run test suite",
+      "",
+      "  Awaiting your approval — nothing has been changed.",
+    ],
+  },
+  {
+    id: "deep",
+    label: "Deep",
+    title: "Deep — more structure, not a reliability upgrade",
+    description:
+      "Deep loads the governed pipeline with adversarial review for riskier work. More ceremony means more cost, not a correctness score.",
+    transcript: [
+      "You",
+      "  babel deep \"Harden the migration path\"",
+      "",
+      "Babel (governed pipeline)",
+      "  ▸ Orchestrator planning",
+      "  ▸ Executor: 3 edits",
+      "  ▸ Adversarial QA review: 2 findings resolved",
+      "  ✓ Verification contract finalized",
+    ],
+  },
+  {
+    id: "evidence",
+    label: "Evidence",
+    title: "Evidence — the harness checks completion claims",
+    description:
+      "A model's \"I'm done\" is not success. Only authoritative project checks can green a completion; otherwise the outcome is labeled unverified.",
+    transcript: [
+      "Outcome labels",
+      "  ✓ VERIFIED_COMPLETE   — required checks ran and passed",
+      "  ~ UNVERIFIED_PATCH    — changes exist; checks did not run",
+      "  ✗ BLOCKED             — isolation or policy stopped the session",
+      "",
+      "  exit 0 only for verified/unverified-patch terminals",
+    ],
+  },
+];
+---
+<MarketingLayout
+  title="Product tour — Babel"
+  description="A labeled walkthrough of the Babel Harness interface and workflow. Illustrative reference content, not a live run."
+  canonicalPath="/tour"
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Product tour</p>
+      <h1>See how Babel works, before you run it.</h1>
+      <p class="lede">
+        This is an accessible, clearly labeled walkthrough of the interface and
+        workflow. Everything below is illustrative reference content — not a
+        live session, not captured execution output, and not a copied
+        verification receipt.
+      </p>
+    </div>
+  </section>
+
+  <section class="band" aria-label="Tour sections">
+    <div class="tour-tabs" role="tablist" aria-label="Tour sections">
+      {sections.map((section, i) => (
+        <button
+          role="tab"
+          id={`tour-tab-${section.id}`}
+          aria-selected={i === 0 ? "true" : "false"}
+          aria-controls={`tour-panel-${section.id}`}
+          class={i === 0 ? "active" : ""}
+          type="button"
+        >
+          {section.label}
+        </button>
+      ))}
+    </div>
+
+    {sections.map((section, i) => (
+      <div
+        class="tour-panel"
+        role="tabpanel"
+        id={`tour-panel-${section.id}`}
+        aria-labelledby={`tour-tab-${section.id}`}
+        hidden={i === 0 ? undefined : "hidden"}
+      >
+        <h2>{section.title}</h2>
+        <p>{section.description}</p>
+        <p><span class="reference-label">Reference preview</span> — illustrative walkthrough, not a live run</p>
+        <figure class="terminal-figure">
+          <pre class="tour-transcript">{section.transcript.join("\n")}</pre>
+          <figcaption>
+            Illustrative transcript written for this tour. It is explanatory
+            content, not a Babel verification receipt.
+          </figcaption>
+        </figure>
+      </div>
+    ))}
+  </section>
+
+  <section class="band">
+    <p>
+      Ready to try it? Start with the
+      <a href="/docs/getting-started/quickstart/">quickstart</a> — the no-key
+      checkpoint works without any provider credential.
+    </p>
+  </section>
+</MarketingLayout>
+
+<style>
+  .tour-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .tour-tabs button {
+    font: inherit;
+    background: var(--panel);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  .tour-tabs button[aria-selected="true"] {
+    color: var(--text);
+    border-color: var(--gold);
+  }
+  .tour-transcript {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+</style>
+
+<script>
+  const tablist = document.querySelector<HTMLDivElement>(".tour-tabs");
+  if (tablist) {
+    const tabs = Array.from(tablist.querySelectorAll<HTMLButtonElement>("[role='tab']"));
+    const panels = Array.from(document.querySelectorAll<HTMLElement>(".tour-panel"));
+    const select = (tab: HTMLButtonElement) => {
+      for (const t of tabs) t.setAttribute("aria-selected", String(t === tab));
+      for (const p of panels) {
+        p.hidden = p.id !== tab.getAttribute("aria-controls");
+      }
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        const delta = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!delta) return;
+        event.preventDefault();
+        const next = tabs[(index + delta + tabs.length) % tabs.length];
+        next.focus();
+        select(next);
+      });
+    });
+  }
+</script>

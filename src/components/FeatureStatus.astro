@@ -1,0 +1,54 @@
+---
+// Renders snapshot feature records. Readiness decisions are never re-derived
+// here; the display reflects the validated data as-is.
+import type { ProductSnapshot } from "../lib/product-content";
+
+interface Props {
+  snapshot: ProductSnapshot;
+  /** Feature IDs to show, in order. Unknown IDs fail the build. */
+  ids: string[];
+}
+
+const { snapshot, ids } = Astro.props as { snapshot: ProductSnapshot; ids: string[] };
+const AVAILABILITY_LABEL: Record<string, string> = {
+  source_only: "In source",
+  preview_available: "Preview",
+  released: "Released",
+  planned: "Planned",
+  unknown: "Unknown",
+};
+const QUALIFICATION_LABEL: Record<string, string> = {
+  source_inspected: "Source-inspected",
+  scoped_checks: "Scoped checks",
+  live_workflow: "Live workflow verified",
+  not_qualified: "Not qualified",
+  unknown: "Unknown",
+};
+
+const features = ids.map((id: string) => {
+  const record = snapshot.features.find((f: { id: string }) => f.id === id);
+  if (!record) {
+    throw new Error(
+      `FeatureStatus: unknown feature id "${id}" — fix the page or the snapshot; never render a default success`
+    );
+  }
+  return record;
+});
+---
+<div class="card-grid">
+  {features.map((feature: { id: string; label: string; availability: string; scope: string; limitations: string[]; qualification: string }) => (
+    <article class="card">
+      <span class={`status-pill ${feature.availability}`}>{AVAILABILITY_LABEL[feature.availability]}</span>
+      <h3>{feature.label}</h3>
+      <p>{feature.scope}</p>
+      {feature.limitations.length > 0 && (
+        <ul>
+          {feature.limitations.map((limitation: string) => (
+            <li>{limitation}</li>
+          ))}
+        </ul>
+      )}
+      <p class="visually-hidden">Qualification: {QUALIFICATION_LABEL[feature.qualification]}</p>
+    </article>
+  ))}
+</div>

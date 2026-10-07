@@ -1,0 +1,91 @@
+---
+title: Your first coding task
+description: A walkthrough in a disposable repository, including what a blocked or unverified outcome looks like and what to do next.
+slug: docs/getting-started/first-coding-task
+pageType: tutorial
+sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
+reviewedAt: 2026-10-06
+interfaces:
+  - TUI
+  - CLI
+prerequisites:
+  - Quickstart completed
+  - An execution-isolation decision (Docker or profile choice)
+sourcePaths:
+  - docs/CHAT_MODE.md
+  - docs/CLI_QUICKSTART.md
+---
+
+import DocsSourceNote from "../../../components/DocsSourceNote.astro";
+
+Use a repository you can afford to change — clone a small project of yours or
+make a scratch repo. The walkthrough below is a **documented walkthrough
+example**, not a captured qualified run: outcomes depend on your provider,
+model, and environment.
+
+## 1. Prepare the environment
+
+Start in the repository root of the Babel clone. Decide isolation **before**
+any mutating task:
+
+- **Docker available and a sandbox image configured** → keep the default
+  `safe_repo` profile.
+- **Trusted repo, no Docker** → read
+  [Execution profiles](/docs/safety/execution-profiles/) carefully first.
+  `dev_local` permits intrinsic inspection commands only; project-code tests
+  and builds are denied without isolation. Do not treat `dev_local` as a way
+  to unblock a coding run that isolation is blocking.
+
+## 2. Start a chat session
+
+```powershell
+node .\babel-cli\dist\index.js interactive
+```
+
+Then give a small, concrete task:
+
+```text
+> Fix the failing test in tests/utils.test.js
+```
+
+Watch the tool activity: Babel reads files, proposes edits, and runs checks.
+Tool approvals appear in the TUI under your configured permission behavior
+(`/permissions`).
+
+## 3. Read the outcome honestly
+
+Babel does not treat a model "I'm done" as success. Completion is gated by an
+honesty policy: execute tasks need real writes plus verification by
+**authoritative** project commands (your test runner). Possible terminal
+outcomes include:
+
+- **Verified** — required verification actually ran and passed.
+- **Unverified patch** — changes were made but verification did not
+  substantively run. Treat this as "not done yet": run the checks yourself.
+- **Blocked** — isolation unavailable, missing tools, or repeated verifier
+  tampering can block the session. This is the harness working as designed.
+
+## 4. Inspect and recover
+
+```text
+/diff          inspect the latest changes
+/checkpoint    mark a restore point
+/restore       return to a checkpoint
+```
+
+From the CLI (not the TUI): `node .\babel-cli\dist\index.js undo` restores the
+last checkpoint. There is no `/undo` inside the TUI.
+
+If your first session ends blocked or unverified, that is an honest result of
+this stage of the product — ordinary coding-loop reliability is under active
+qualification. See [Troubleshooting](/docs/getting-started/troubleshooting/)
+for the common causes.
+
+<DocsSourceNote
+  pageType="tutorial"
+  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
+  reviewedAt="2026-10-06"
+  sourcePaths={["docs/CHAT_MODE.md", "docs/CLI_QUICKSTART.md"]}
+  interfaces={["TUI", "CLI"]}
+  prerequisites={["Quickstart", "Isolation decision"]}
+/>

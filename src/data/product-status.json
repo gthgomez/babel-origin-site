@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/gthgomez/Babel",
+  "sourceRevision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+  "reviewedAt": "2026-10-06",
+  "features": [
+    {
+      "id": "chat",
+      "label": "Chat",
+      "availability": "source_only",
+      "qualification": "source_inspected",
+      "scope": "Chat entrypoint and TUI are present in the public tree as the daily interaction mode.",
+      "limitations": [
+        "Ordinary coding-loop reliability is under active qualification.",
+        "Provider-backed sessions require local credentials and a working provider; quality varies by model."
+      ],
+      "evidenceIds": ["src-chat-entrypoint"]
+    },
+    {
+      "id": "plan",
+      "label": "Plan",
+      "availability": "source_only",
+      "qualification": "source_inspected",
+      "scope": "Plan mode exists as a CLI/TUI entrypoint for planning before mutation.",
+      "limitations": [
+        "Planning behavior boundaries are documented in the product source.",
+        "No live workflow qualification is claimed."
+      ],
+      "evidenceIds": ["src-plan-entrypoint"]
+    },
+    {
+      "id": "deep",
+      "label": "Deep",
+      "availability": "source_only",
+      "qualification": "source_inspected",
+      "scope": "Deep mode exists as a higher-ceremony path intended for riskier work.",
+      "limitations": [
+        "Still maturing; route availability is not a reliability ranking.",
+        "Deep is not a blanket reliability upgrade over Chat."
+      ],
+      "evidenceIds": ["src-deep-entrypoint"]
+    },
+    {
+      "id": "doctor",
+      "label": "Doctor environment checks",
+      "availability": "source_only",
+      "qualification": "source_inspected",
+      "scope": "babel doctor reports environment prerequisites (runtime, providers, Docker).",
+      "limitations": [
+        "Output is diagnostic; a clean doctor report is not a coding-reliability score."
+      ],
+      "evidenceIds": ["src-doctor-entrypoint"]
+    },
+    {
+      "id": "desktop",
+      "label": "Desktop shell",
+      "availability": "preview_available",
+      "qualification": "source_inspected",
+      "scope": "Electron Desktop shell and a Windows portable bundle builder exist in source; the opening screen is an explicitly labeled reference preview.",
+      "limitations": [
+        "The portable bundle is unsigned and contributor-built; it is not a published download.",
+        "Installer, uninstaller integration, signing, and automatic updates are unimplemented."
+      ],
+      "evidenceIds": ["src-desktop-readme"]
+    },
+    {
+      "id": "execution-profiles",
+      "label": "Execution profiles",
+      "availability": "source_only",
+      "qualification": "scoped_checks",
+      "scope": "Profile policy (safe_repo default with Docker isolation, dev_local, and others) is implemented and covered by enforcement tests.",
+      "limitations": [
+        "The default safe_repo profile fail-closes without Docker.",
+        "dev_local permits intrinsic inspection commands only; project-code tests/builds are denied without isolation."
+      ],
+      "evidenceIds": ["src-execution-profiles"]
+    },
+    {
+      "id": "mcp-inspection",
+      "label": "MCP read-only inspection",
+      "availability": "source_only",
+      "qualification": "source_inspected",
+      "scope": "A read-only MCP inspection entrypoint exists for control-plane style inspection.",
+      "limitations": ["Inspection surface only; not a general execution API."],
+      "evidenceIds": ["src-status-doc"]
+    },
+    {
+      "id": "coding-loop-reliability",
+      "label": "Ordinary coding-loop reliability",
+      "availability": "planned",
+      "qualification": "not_qualified",
+      "scope": "Everyday repository work reliability is explicitly under active qualification upstream.",
+      "limitations": [
+        "No general reliability claim is made or implied anywhere on this site.",
+        "Scoped test passes are not a live-model quality score."
+      ],
+      "evidenceIds": ["src-status-doc"]
+    }
+  ],
+  "distributions": [
+    {
+      "id": "source",
+      "kind": "source",
+      "label": "Source checkout (clone + build)",
+      "availability": "available",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "signingState": "not_applicable",
+      "evidenceIds": ["src-readme-install"]
+    },
+    {
+      "id": "npm-package",
+      "kind": "npm",
+      "label": "npm package (babel-harness)",
+      "availability": "not_available",
+      "reason": "No published npm package exists today. The documented install path is clone + build.",
+      "signingState": "not_applicable",
+      "evidenceIds": ["src-readme-install"]
+    },
+    {
+      "id": "desktop-windows-portable",
+      "kind": "portable",
+      "label": "Windows portable bundle (Desktop shell + CLI)",
+      "availability": "not_available",
+      "reason": "The unsigned Windows portable bundle can be built by contributors from source; it is not published as a public download and has not completed installer lifecycle qualification.",
+      "signingState": "unsigned",
+      "evidenceIds": ["src-desktop-readme"]
+    },
+    {
+      "id": "github-release-v0.1.0",
+      "kind": "installer",
+      "label": "GitHub release v0.1.0",
+      "availability": "not_available",
+      "version": "v0.1.0",
+      "reason": "Release v0.1.0 (2026-07-23) is a source tag only — it carries no downloadable assets.",
+      "signingState": "not_applicable",
+      "evidenceIds": ["release-v010"]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "src-readme-install",
+      "kind": "source",
+      "url": "https://github.com/gthgomez/Babel/blob/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/README.md",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "observationDate": "2026-10-06",
+      "supports": "Source-only install path (clone + build) and its documented commands."
+    },
+    {
+      "id": "src-chat-entrypoint",
+      "kind": "source",
+      "url": "https://github.com/gthgomez/Babel/blob/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/docs/CHAT_MODE.md",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "observationDate": "2026-10-06",
+      "supports": "Chat mode entrypoint and documented behavior surface."
+    },
+    {
+      "id": "src-plan-entrypoint",
+      "kind": "source",
+      "url": "https://github.com/gthgomez/Babel/blob/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/START_HERE.md",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "observationDate": "2026-10-06",
+      "supports": "Plan mode entrypoint documented in the product start-here guide."
+    },
+    {
+      "id": "src-deep-entrypoint",
+      "kind": "source",
+      "url": "https://github.com/gthgomez/Babel/blob/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/START_HERE.md",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "observationDate": "2026-10-06",
+      "supports": "Deep mode entrypoint documented in the product start-here guide."
+    },
+    {
+      "id": "src-doctor-entrypoint",
+      "kind": "source",
+      "url": "https://github.com/gthgomez/Babel/blob/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/docs/CLI_QUICKSTART.md",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "observationDate": "2026-10-06",
+      "supports": "Doctor command documented with its diagnostic scope."
+    },
+    {
+      "id": "src-desktop-readme",
+      "kind": "source",
+      "url": "https://github.com/gthgomez/Babel/blob/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/babel-desktop/README.md",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "observationDate": "2026-10-06",
+      "supports": "Desktop shell scope: contributor-built unsigned Windows portable bundle, reference-preview opening screen."
+    },
+    {
+      "id": "src-execution-profiles",
+      "kind": "source",
+      "url": "https://github.com/gthgomez/Babel/blob/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/babel-cli/src/config/executionProfiles.ts",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "observationDate": "2026-10-06",
+      "supports": "Execution profile policy definitions, including dev_local's inspection-only scope."
+    },
+    {
+      "id": "src-status-doc",
+      "kind": "source",
+      "url": "https://github.com/gthgomez/Babel/blob/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/docs/STATUS.md",
+      "revision": "2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3",
+      "observationDate": "2026-10-06",
+      "supports": "Upstream status: availability vs qualification separation, MCP inspection entrypoint, active-qualification statement."
+    },
+    {
+      "id": "release-v010",
+      "kind": "release",
+      "url": "https://github.com/gthgomez/Babel/releases/tag/v0.1.0",
+      "observationDate": "2026-10-06",
+      "supports": "Release v0.1.0 exists as a tag with zero published assets (observed via GitHub API)."
+    }
+  ]
+}

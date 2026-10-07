@@ -1,0 +1,112 @@
+---
+import MarketingLayout from "../layouts/MarketingLayout.astro";
+import FeatureStatus from "../components/FeatureStatus.astro";
+import { parseProductSnapshot } from "../lib/product-content";
+import snapshotData from "../data/product-status.json";
+
+// Exact hero copy from the product spec (§6). The homepage explains Babel and
+// routes visitors to a real next step; claims stay positioning statements.
+const snapshot = parseProductSnapshot(snapshotData);
+---
+
+<style>
+  .proof-preview {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+</style>
+<MarketingLayout
+  title="Babel — A coding agent that shows its work"
+  description="A local coding agent with inspectable instructions, explicit permissions, and visible verification results. Start with Chat; use Plan or Deep when you need more structure."
+  canonicalPath="/"
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Babel Harness · Pre-1.0</p>
+      <h1>A coding agent that shows its work.</h1>
+      <p class="hero-tagline">Run. Verify. Understand.</p>
+      <p class="lede">
+        A local coding agent with inspectable instructions, explicit permissions,
+        and visible verification results. Start with Chat; use Plan or Deep when
+        you need more structure.
+      </p>
+      <div class="actions" aria-label="Primary actions">
+        <a class="button primary" href="/docs/getting-started/quickstart">Get started</a>
+        <a class="button secondary" href="https://github.com/gthgomez/Babel">View GitHub</a>
+      </div>
+      <p class="maturity-note">
+        Ordinary coding-loop reliability is under active qualification — see
+        <a href="/status/">status</a>. These are product positioning statements,
+        not proof that every edit has been independently verified.
+      </p>
+    </div>
+    <figure class="terminal-figure" id="proof">
+      <pre class="proof-preview">You
+  Fix the failing webhook retry test.
+
+Babel
+  ▸ Read src/webhooks/handler.ts
+  ▸ Edited src/webhooks/handler.ts
+  ▸ npm test -- webhook
+  ✓ 18 passed
+
+  Completed · 1 file changed · verified</pre>
+      <figcaption>
+        <span class="reference-label">Reference preview</span> — an illustrative
+        walkthrough, not a live run. See the <a href="/tour/">product tour</a>.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section id="workflow" class="band">
+    <div class="section-heading">
+      <p class="eyebrow">How work happens</p>
+      <h2>Inspect, change, check, and review the evidence</h2>
+    </div>
+    <div class="card-grid">
+      <article class="card"><h3>Inspect</h3><p>Read the repo, the applicable instructions, and the permission boundary before anything moves.</p></article>
+      <article class="card"><h3>Change</h3><p>Make the smallest correct change inside the approved scope.</p></article>
+      <article class="card"><h3>Check</h3><p>Run the strongest practical check for the touched surface.</p></article>
+      <article class="card"><h3>Review evidence</h3><p>See what was run, what passed, and what remains unverified.</p></article>
+    </div>
+  </section>
+
+  <section id="limits" class="band">
+    <div class="section-heading">
+      <p class="eyebrow">Modes</p>
+      <h2>Chat first; more structure when you need it</h2>
+    </div>
+    <div class="card-grid">
+      <article class="card primary-mode">
+        <span class="mode-badge">Daily default</span>
+        <h3>Chat</h3>
+        <p>Everyday interaction with visible tool activity and approvals.</p>
+      </article>
+      <article class="card">
+        <h3>Plan</h3>
+        <p>Planning before mutation. Structured intent, without executing work.</p>
+      </article>
+      <article class="card">
+        <h3>Deep</h3>
+        <p>Additional workflow structure for bigger tasks — not a blanket reliability upgrade.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="current-state" class="band">
+    <div class="section-heading">
+      <p class="eyebrow">Current state</p>
+      <h2>What exists today, and how far it is verified</h2>
+    </div>
+    <FeatureStatus snapshot={snapshot} ids={["chat", "plan", "deep", "desktop"]} />
+    <p>
+      See <a href="/status/">status</a> for the full capability snapshot with
+      evidence links, and the
+      <a href={`https://github.com/gthgomez/Babel/blob/${snapshot.sourceRevision}/README.md`}>product source</a>
+      for the pinned revision behind this summary.
+    </p>
+  </section>
+</MarketingLayout>
