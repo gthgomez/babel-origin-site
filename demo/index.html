@@ -27,33 +27,32 @@
       <section class="hero compact">
         <div class="hero-copy">
           <p class="eyebrow">Demo preview</p>
-          <h1>Four daily Babel lanes, shown without pretending they are production proof.</h1>
+          <h1>Four daily Babel lanes: read-only ask, no-edit plan, verified fix, and workspace health.</h1>
           <p class="lede">
-            This page links the origin site to a safer demo story: read-only ask,
-            no-edit plan, verified small-fix intent, and workspace health diagnostics.
+            A bounded demo of the four lanes, with sample output you can switch between below.
           </p>
         </div>
         <figure class="terminal-figure">
-          <img src="../assets/babel-terminal-proof.png" alt="Terminal proof card for Babel demo checks">
-          <figcaption>Replace this with live dated output only after public export is refreshed.</figcaption>
+          <img src="../assets/babel-terminal-proof.png" alt="Illustrative mockup of a Babel CLI report showing typecheck, catalog validation, benchmarks, and doctor lines">
+          <figcaption>Illustrative mockup of the Babel CLI report. Switch lanes below for interactive sample output.</figcaption>
         </figure>
       </section>
 
       <section class="band">
-        <div class="command-grid" role="list">
-          <button class="command-card active" type="button" data-command="ask" role="listitem">
+        <div class="command-grid" role="group" aria-label="Babel command lanes">
+          <button class="command-card active" type="button" data-command="ask">
             <span>bl ask</span>
             <strong>Read-only inspection</strong>
           </button>
-          <button class="command-card" type="button" data-command="plan" role="listitem">
+          <button class="command-card" type="button" data-command="plan">
             <span>bl plan</span>
             <strong>No-edit planning</strong>
           </button>
-          <button class="command-card" type="button" data-command="fix" role="listitem">
+          <button class="command-card" type="button" data-command="fix">
             <span>bl fix</span>
             <strong>Verified edit lane</strong>
           </button>
-          <button class="command-card" type="button" data-command="doctor" role="listitem">
+          <button class="command-card" type="button" data-command="doctor">
             <span>babel doctor</span>
             <strong>Workspace health</strong>
           </button>
