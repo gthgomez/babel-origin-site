@@ -3,8 +3,8 @@ title: Desktop
 description: The Electron Desktop shell — what the source provides, what the Windows portable preview includes, and what is explicitly unqualified.
 slug: docs/interfaces/desktop
 pageType: reference
-sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
-reviewedAt: 2026-10-06
+sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
+reviewedAt: 2026-10-11
 interfaces:
   - Desktop
 prerequisites:
@@ -19,13 +19,16 @@ import DocsSourceNote from "../../../components/DocsSourceNote.astro";
 Babel Desktop is an Electron visual shell for the Babel Harness. The real
 work still runs the Babel CLI underneath; Desktop is the window around it.
 
-## No public download
+## Published portable preview (unsigned)
 
-There is **no published Desktop download**. The Windows x64 portable bundle
-is a contributor-built artifact produced from source (the builder pins Node
-24.13.1 and Electron, verifies archive SHA256 values, and emits BUILD.json
-plus SHA256SUMS). It is **unsigned**. See
-[Get Babel](/download/) for the supported install path today.
+The v0.1.1 GitHub release publishes the Windows x64 portable bundle as a real,
+checksummed asset — the builder pins Node 24.13.1 and Electron, verifies
+archive SHA256 values, and emits `BUILD.json` plus `SHA256SUMS`. It is
+**unsigned**: no code-signing identity, no SmartScreen reputation, no published
+`Setup.exe`/installer, and no automatic updater. Verify the ZIP's SHA256
+against the release's `SHA256SUMS` before running it. See
+[Get Babel](/download/) for the download, checksum, and the supported
+source-install path.
 
 ## The opening screen is a reference preview
 
@@ -63,8 +66,8 @@ Do not disable Windows security settings to run an unsigned preview.
 
 <DocsSourceNote
   pageType="reference"
-  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
-  reviewedAt="2026-10-06"
+  sourceRevision="ccf6aa9e67beeff81cf3604686c3ffcad1a86416"
+  reviewedAt="2026-10-11"
   sourcePaths={["babel-desktop/README.md", "babel-desktop/docs/INSTALL-WINDOWS.md"]}
   interfaces={["Desktop"]}
   prerequisites={["Windows x64"]}

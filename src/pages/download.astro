@@ -14,7 +14,7 @@ const AVAILABILITY: Record<string, string> = {
 ---
 <MarketingLayout
   title="Get Babel — download"
-  description="Install Babel Harness from source. No npm package or public binary download exists yet — here is the supported path and the honest state of everything else."
+  description="Install Babel from source. There is no published npm package; the v0.1.1 GitHub release offers an unsigned Windows portable preview. Here is the supported path and the honest state of everything else."
   canonicalPath="/download"
 >
   <section class="hero">
@@ -23,8 +23,11 @@ const AVAILABILITY: Record<string, string> = {
       <h1>Install Babel from source.</h1>
       <p class="lede">
         The supported installation path today is a source clone and build.
-        There is no published npm package and no public binary download —
-        everything on this page says exactly what exists and what does not.
+        There is <strong>no published npm package</strong>. The v0.1.1 GitHub
+        release also publishes an <strong>unsigned</strong> Windows portable
+        preview — a real asset with a disclosed checksum, but not a signed or
+        installer-qualified release. Everything on this page says exactly what
+        exists and what does not.
       </p>
       <InstallActions snapshot={snapshot} />
     </div>
@@ -58,6 +61,12 @@ node ./babel-cli/dist/index.js doctor</code></pre>
           </span>
           <h3>{dist.label}</h3>
           {dist.version && <p><code>{dist.version}</code></p>}
+          {dist.availability === "available" && dist.assetUrl && (
+            <p><a href={dist.assetUrl}>Download from the v0.1.1 GitHub release</a></p>
+          )}
+          {dist.availability === "available" && dist.checksum && (
+            <p class="checksum"><strong>Checksum:</strong> <code>{dist.checksum}</code></p>
+          )}
           <p>{dist.reason ?? ""}</p>
           {dist.signingState === "unsigned" && (
             <p><strong>Signing:</strong> unsigned.</p>
@@ -67,6 +76,9 @@ node ./babel-cli/dist/index.js doctor</code></pre>
     </div>
     <p>
       See <a href="/status/">status</a> for the evidence behind each record.
+      An available binary distribution is a real GitHub-hosted asset with a
+      disclosed checksum; for the unsigned Windows preview, verify the SHA256
+      against the release's <code>SHA256SUMS</code> before running it.
     </p>
   </section>
 </MarketingLayout>
@@ -79,5 +91,9 @@ node ./babel-cli/dist/index.js doctor</code></pre>
     padding: 16px;
     overflow-x: auto;
     font-size: 0.9rem;
+  }
+  .checksum code {
+    overflow-wrap: anywhere;
+    font-size: 0.8rem;
   }
 </style>

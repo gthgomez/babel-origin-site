@@ -1,10 +1,10 @@
 ---
 title: Install Babel from source
-description: The supported installation path today is cloning the repository and building the CLI. No npm package or public binary download exists yet.
+description: The supported installation path today is cloning the repository and building the CLI. There is no published npm package; the v0.1.1 GitHub release offers an unsigned Windows portable preview.
 slug: docs/getting-started/install
 pageType: tutorial
-sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
-reviewedAt: 2026-10-06
+sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
+reviewedAt: 2026-10-11
 interfaces:
   - CLI
   - TUI
@@ -19,9 +19,12 @@ sourcePaths:
 
 import DocsSourceNote from "../../../components/DocsSourceNote.astro";
 
-Babel is **not published as an npm package and has no public binary download**.
-The supported installation path is a source clone. Anything else you may find
-(an `npm install babel`-style command, an installer) is not Babel Harness.
+Babel is **not published as an npm package**. The supported installation path is
+a source clone. Install commands that fetch a `babel`/`babel-harness` package
+from the npm registry are not Babel Harness. Separately, the v0.1.1 GitHub
+release publishes an **unsigned Windows x64 portable preview** — a real,
+checksummed asset that is not a signed or installer-qualified release. See
+[Desktop](/docs/interfaces/desktop/) for its exact scope.
 
 ## 1. Clone and build
 
@@ -62,8 +65,10 @@ the install. Exit zero is not the only legitimate documented outcome.
 
 ## 3. What about Desktop?
 
-The Electron Desktop shell and an unsigned Windows portable bundle builder
-exist in the source tree, but **no Desktop download is published**. See
+A Windows x64 portable preview (Desktop shell plus the authoritative CLI) is
+published as an **unsigned** asset in the v0.1.1 GitHub release, with the ZIP's
+SHA256 published in `SHA256SUMS`. There is **no published Setup.exe**, no code
+signing, and no automatic updater. Verify the checksum before running it. See
 [Desktop](/docs/interfaces/desktop/) for what exists and what is explicitly
 unqualified.
 
@@ -78,8 +83,8 @@ unqualified.
 
 <DocsSourceNote
   pageType="tutorial"
-  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
-  reviewedAt="2026-10-06"
+  sourceRevision="ccf6aa9e67beeff81cf3604686c3ffcad1a86416"
+  reviewedAt="2026-10-11"
   sourcePaths={["README.md", "docs/CLI_QUICKSTART.md", "babel-cli/package.json"]}
   interfaces={["CLI", "TUI"]}
   prerequisites={["Git", "Node.js 22.19+ / 24.13.1+"]}

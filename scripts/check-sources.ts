@@ -33,6 +33,22 @@ async function main() {
     process.exit(0);
   }
 
+  // Informational: newest published release. Read-only; failures are classified.
+  try {
+    const res = await fetch("https://api.github.com/repos/gthgomez/Babel/releases/latest", {
+      headers: { Accept: "application/vnd.github+json", "User-Agent": "babel-origin-site-check-sources" },
+    });
+    if (res.ok) {
+      const rel = await res.json();
+      console.log(`Latest published release: ${rel.tag_name} (published ${rel.published_at}).`);
+      console.log("If the pinned snapshot predates this release, review src/data/product-status.json.");
+    } else {
+      console.log(`Release check NOT RUN: GitHub API returned ${res.status}.`);
+    }
+  } catch (e) {
+    console.log(`Release check NOT RUN: GitHub unreachable (${e instanceof Error ? e.message : e}).`);
+  }
+
   if (head === pinned) {
     console.log("CURRENT: Babel main matches the pinned snapshot.");
     return;

@@ -45,7 +45,7 @@ test.describe("tour", () => {
 });
 
 test.describe("download", () => {
-  test("unknown download has no binary CTA", async ({ page }) => {
+  test("available downloads link to real assets; unavailable ones are plain text", async ({ page }) => {
     await page.goto("/download/");
     // Buttons/links may only exist for real actions: the source install path
     // and genuinely available binary assets from the snapshot.
@@ -63,6 +63,26 @@ test.describe("download", () => {
         );
       expect(ok, `unexpected install action href ${href}`).toBe(true);
     }
+
+    // An available unsigned binary still renders a real download button, with
+    // its unsigned warning shown together with the link (regression: the
+    // warning must not hide the download).
+    const availableBinaries = snapshot.distributions.filter(
+      (d: { kind: string; availability: string }) =>
+        d.kind !== "source" && d.availability === "available"
+    );
+    expect(availableBinaries.length).toBeGreaterThan(0);
+    for (const dist of availableBinaries) {
+      const link = page.locator(`.actions a[href="${dist.assetUrl}"]`);
+      await expect(link).toHaveCount(1);
+      if ((dist as { signingState: string }).signingState === "unsigned") {
+        const action = page.locator(".action").filter({
+          has: page.locator(`a[href="${dist.assetUrl}"]`),
+        });
+        await expect(action.locator(".action-warning")).toContainText(/unsigned/i);
+      }
+    }
+
     // Unavailable distributions are plain text, not click targets that
     // pretend to install. Their label must not be an anchor; only the
     // explicit "See status" pointer may link.
@@ -74,7 +94,7 @@ test.describe("download", () => {
       await expect(label).toHaveCount(1);
       await expect(label.locator("strong a")).toHaveCount(0);
     }
-    // npm must be shown as unavailable.
+    // npm must be shown as not published to the registry.
     await expect(page.locator("body")).toContainText(/no published npm package/i);
   });
 });

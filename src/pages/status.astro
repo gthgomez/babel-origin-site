@@ -11,6 +11,21 @@ const featuresWithEvidence = snapshot.features.map((f) => ({
   ...f,
   evidence: f.evidenceIds.map((id) => evidenceById.get(id)).filter((e) => !!e),
 }));
+const distributionsWithEvidence = snapshot.distributions.map((d) => ({
+  ...d,
+  evidence: d.evidenceIds.map((id) => evidenceById.get(id)).filter((e) => !!e),
+}));
+const AVAILABILITY: Record<string, string> = {
+  available: "Available",
+  not_available: "Not available",
+  unknown: "Unknown",
+};
+const SIGNING: Record<string, string> = {
+  signed: "signed",
+  unsigned: "unsigned",
+  not_applicable: "n/a",
+  unknown: "unknown",
+};
 ---
 <MarketingLayout
   title="Babel product status"
@@ -59,6 +74,39 @@ const featuresWithEvidence = snapshot.features.map((f) => ({
   </section>
 
   <section class="band">
+    <div class="section-heading">
+      <p class="eyebrow">Distributions</p>
+      <h2>What is published, and the evidence for it</h2>
+    </div>
+    {distributionsWithEvidence.map((dist) => (
+      <article class="status-row">
+        <div>
+          <h3>{dist.label}</h3>
+          <p class="status-scope">
+            <span class={`status-pill ${dist.availability === "available" ? "released" : ""}`}>
+              {AVAILABILITY[dist.availability]}
+            </span>
+            {dist.version && <span> · <code>{dist.version}</code></span>}
+            {dist.revision && <span> · <code>{dist.revision.slice(0, 12)}</code></span>}
+            <span> · signing: {SIGNING[dist.signingState]}</span>
+          </p>
+          {dist.availability === "available" && dist.assetUrl && (
+            <p><a href={dist.assetUrl}>Published asset</a>{dist.checksum && <span> · <code>{dist.checksum}</code></span>}</p>
+          )}
+          {dist.reason && <p class="status-scope">{dist.reason}</p>}
+        </div>
+        <div class="status-meta">
+          {dist.evidence.map((e) => (
+            <p class="status-evidence">
+              <a href={e!.url}>evidence: {e!.id}</a> — {e!.supports}
+            </p>
+          ))}
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="band">
     <p>
       Qualification of the ordinary coding loop is an upstream engineering
       effort. When it produces new evidence, the pinned snapshot on this page
@@ -76,7 +124,8 @@ const featuresWithEvidence = snapshot.features.map((f) => ({
     border-top: 1px solid var(--border);
     padding: 24px 0;
   }
-  .status-row h2 {
+  .status-row h2,
+  .status-row h3 {
     margin: 0 0 8px;
     font-size: 1.2rem;
   }

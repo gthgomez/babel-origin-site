@@ -60,3 +60,31 @@ test("404 page serves for unknown routes", async ({ page }) => {
   expect(res?.status()).toBe(404);
   await expect(page.locator("body")).toContainText("404");
 });
+
+test("first-run path homepage → quickstart → install → first task is navigable", async ({ page }) => {
+  await page.goto("/");
+  // Homepage primary CTA is the first-run entry point.
+  await page.locator(".hero .button.primary").click();
+  await expect(page).toHaveURL(/\/docs\/getting-started\/quickstart\/?$/);
+  await expect(page.locator("main")).toContainText(/no.key/i);
+
+  // The install guide is reachable from the docs surface and links onward.
+  await page.goto("/docs/getting-started/install/");
+  await expect(page.locator("main")).toContainText(/clone/i);
+  await page.goto("/docs/getting-started/first-coding-task/");
+  await expect(page.locator("main")).toContainText(/outcome/i);
+});
+
+test("browser Back and Forward restore navigation", async ({ page }) => {
+  await page.goto("/");
+  await page.goto("/download/");
+  await page.goto("/docs/getting-started/install/");
+  await page.goBack();
+  await expect(page).toHaveURL(/\/download\/?$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/localhost:4173\/?$/);
+  await page.goForward();
+  await expect(page).toHaveURL(/\/download\/?$/);
+  // The destination re-renders (not a blank history entry).
+  await expect(page.locator("main")).toContainText(/Install Babel from source/i);
+});
