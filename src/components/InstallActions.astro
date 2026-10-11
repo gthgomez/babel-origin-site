@@ -1,8 +1,11 @@
 ---
-// Renders install actions derived by getInstallActions. Download buttons only
-// appear when the snapshot proves a real public asset; unavailable
-// distributions render as static text — never as a click target that pretends
-// to install something.
+// Renders install actions derived by getInstallActions. A download button
+// appears only when the snapshot proves a real public asset (assetUrl +
+// version/revision + checksum + disclosed signing state). An available-but-
+// unsigned artifact still renders as a real download, with its unsigned
+// warning shown next to the button. Unavailable or incomplete distributions
+// render as static explanatory text — never as a click target that pretends to
+// install something.
 import { getInstallActions, type ProductSnapshot } from "../lib/product-content";
 
 interface Props {
@@ -11,29 +14,24 @@ interface Props {
 
 const { snapshot } = Astro.props;
 const actions = getInstallActions(snapshot);
-const realActions = actions.filter((a) => a.kind === "source" || a.notice === null);
-const unavailable = snapshot.distributions.filter(
-  (d: { kind: string; availability: string }) =>
-    d.kind !== "source" && d.availability !== "available"
-);
+const links = actions.filter((a) => a.notice === null);
+const notices = actions.filter((a) => a.notice !== null);
 ---
 <div class="actions" aria-label="Install Babel">
-  {realActions.map((action) =>
-    action.kind === "source" ? (
-      <a class="button primary" href={action.href}>{action.label}</a>
-    ) : (
-      <a class="button secondary" href={action.href}>{action.label}</a>
-    )
-  )}
+  {links.map((action) => (
+    <div class="action">
+      <a class={`button ${action.kind === "source" ? "primary" : "secondary"}`} href={action.href}>
+        {action.label}
+      </a>
+      {action.warning && <p class="action-warning">{action.warning}</p>}
+    </div>
+  ))}
 </div>
-{unavailable.length > 0 && (
+{notices.length > 0 && (
   <ul class="install-notices">
-    {unavailable.map((dist: { label: string; reason?: string; signingState: string; availability: string }) => (
+    {notices.map((action) => (
       <li>
-        <strong>{dist.label}:</strong> {dist.reason ?? "Not yet published."}
-        {dist.signingState === "unsigned" && dist.availability === "available" && (
-          <span> This bundle is unsigned.</span>
-        )}
+        <strong>{action.label}:</strong> {action.notice}
         See <a href="/status/">status</a> for evidence.
       </li>
     ))}

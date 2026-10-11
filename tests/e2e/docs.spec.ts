@@ -3,6 +3,9 @@ import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = process.cwd();
+const snapshot = JSON.parse(
+  readFileSync(resolve(root, "src/data/product-status.json"), "utf8")
+);
 
 const expectedGuides = [
   "getting-started/install",
@@ -37,6 +40,9 @@ function docsContentFiles(base = "src/content/docs"): string[] {
 
 test.describe("documentation integrity", () => {
   test("all required guides exist, render, and carry a source note", async ({ page }) => {
+    // 18 sequential navigations make this the suite's long pole; mark it slow
+    // so parallel workers do not produce a false timeout failure.
+    test.slow();
     for (const guide of expectedGuides) {
       const res = await page.goto(`/docs/${guide}/`);
       expect(res?.status(), `/docs/${guide}/ missing`).toBe(200);
@@ -81,7 +87,7 @@ test.describe("documentation integrity", () => {
     const source = page.locator(".source-note-links a", { hasText: "Implementation source" });
     expect(await edit.getAttribute("href")).toContain("github.com/gthgomez/babel-origin-site");
     expect(await source.getAttribute("href")).toContain("github.com/gthgomez/Babel/");
-    // Source links are pinned to a full revision.
-    expect(await source.getAttribute("href")).toMatch(/2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3/);
+    // Source links are pinned to the reviewed snapshot revision.
+    expect(await source.getAttribute("href")).toContain(snapshot.sourceRevision);
   });
 });

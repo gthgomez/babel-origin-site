@@ -109,3 +109,58 @@ describe("snapshot data stays internally consistent", () => {
     expect(() => parseProductSnapshot(data)).toThrow(ProductContentError);
   });
 });
+
+describe("reviewed snapshot and guide pins stay consistent", () => {
+  const snapshot = JSON.parse(
+    readFileSync(resolve(root, "src/data/product-status.json"), "utf8")
+  );
+
+  it("every guide frontmatter pins the snapshot revision and review date", () => {
+    const guides = collectFiles(resolve(root, "src/content/docs"), [".md", ".mdx"]);
+    expect(guides.length).toBeGreaterThan(0);
+    for (const file of guides) {
+      const text = readFileSync(file, "utf8");
+      const rel = file.slice(root.length + 1);
+      const rev = text.match(/sourceRevision:\s*([0-9a-f]{40})/);
+      const reviewed = text.match(/reviewedAt:\s*(\d{4}-\d{2}-\d{2})/);
+      expect(rev?.[1], `${rel} sourceRevision`).toBe(snapshot.sourceRevision);
+      expect(reviewed?.[1], `${rel} reviewedAt`).toBe(snapshot.reviewedAt);
+    }
+  });
+
+  it("every guide's source-note prop matches the snapshot revision", () => {
+    const guides = collectFiles(resolve(root, "src/content/docs"), [".md", ".mdx"]);
+    let propCount = 0;
+    for (const file of guides) {
+      const text = readFileSync(file, "utf8");
+      const rel = file.slice(root.length + 1);
+      const prop = text.match(/sourceRevision="([0-9a-f]{40})"/);
+      const reviewed = text.match(/reviewedAt="(\d{4}-\d{2}-\d{2})"/);
+      if (prop) {
+        propCount++;
+        expect(prop[1], `${rel} DocsSourceNote sourceRevision`).toBe(snapshot.sourceRevision);
+      }
+      if (reviewed) {
+        expect(reviewed[1], `${rel} DocsSourceNote reviewedAt`).toBe(snapshot.reviewedAt);
+      }
+    }
+    expect(propCount).toBeGreaterThan(0);
+  });
+
+  it("stale 'no download exists' copy does not return", () => {
+    // Hard-coded claims that were true before v0.1.1 and must not reappear.
+    const stale: RegExp[] = [
+      /no public binary download/i,
+      /no Desktop download is published/i,
+      /no published Desktop download/i,
+      /No npm package or public binary/i,
+    ];
+    for (const file of publicSurface) {
+      const text = readFileSync(file, "utf8");
+      const rel = file.slice(root.length + 1);
+      for (const pattern of stale) {
+        expect(pattern.test(text), `${rel} matches stale copy ${pattern}`).toBe(false);
+      }
+    }
+  });
+});

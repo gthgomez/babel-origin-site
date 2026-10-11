@@ -3,8 +3,8 @@ title: Interfaces overview
 description: Desktop, terminal TUI, headless CLI, and the read-only MCP inspection entrypoint — what each is and how they differ.
 slug: docs/interfaces/overview
 pageType: concept
-sourceRevision: 2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3
-reviewedAt: 2026-10-06
+sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
+reviewedAt: 2026-10-11
 interfaces:
   - Desktop
   - TUI
@@ -25,7 +25,7 @@ harness — not separate products with separate runtimes.
 | --- | --- | --- |
 | **Terminal TUI** (`interactive`) | The primary interface: multi-turn chat/plan/deep in your terminal | Present in source; the daily path |
 | **Headless CLI** (`chat --headless`, `run`) | The same chat engine with JSON output for scripts and CI | Present in source |
-| **Desktop shell** (Electron) | Visual shell around the CLI; project picker, streaming run view | Present in source; portable bundle is contributor-built and unsigned — no public download |
+| **Desktop shell** (Electron) | Visual shell around the CLI; project picker, streaming run view | Published as an unsigned Windows x64 portable preview in the v0.1.1 release; not a signed or installer-qualified release |
 | **MCP inspection** (`mcp`) | Read-only control-plane server for other tools | Present in source; inspection only |
 
 ## How they relate
@@ -43,8 +43,8 @@ harness — not separate products with separate runtimes.
 
 <DocsSourceNote
   pageType="concept"
-  sourceRevision="2aa0200dcf65a18d80183a8eecd5e5c370c9f7f3"
-  reviewedAt="2026-10-06"
+  sourceRevision="ccf6aa9e67beeff81cf3604686c3ffcad1a86416"
+  reviewedAt="2026-10-11"
   sourcePaths={["README.md", "docs/CHAT_MODE.md", "babel-desktop/README.md"]}
   interfaces={["Desktop", "TUI", "CLI", "MCP"]}
 />

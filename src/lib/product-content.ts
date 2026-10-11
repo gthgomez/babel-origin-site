@@ -115,7 +115,18 @@ export interface InstallAction {
   label: string;
   href: string;
   kind: "source" | "download";
+  /**
+   * Non-null when this action is NOT a usable link and must render as static
+   * explanatory text (an incomplete or unavailable distribution never
+   * masquerades as an installable download).
+   */
   notice: string | null;
+  /**
+   * Non-null warning rendered together with a usable download link (for
+   * example, an available-but-unsigned artifact). Distinct from `notice` so an
+   * unsigned-but-real asset still shows its download button.
+   */
+  warning: string | null;
 }
 
 export interface FeatureSummary {
@@ -300,6 +311,11 @@ function parseDistribution(input: unknown, field: string): DistributionRecord {
     }
     if (!record.checksum) {
       throw new ProductContentError(`${field}: an available download requires a checksum`);
+    }
+    if (!/^sha256:[0-9a-f]{64}$/.test(record.checksum)) {
+      throw new ProductContentError(
+        `${field}: checksum must be a full sha256 digest (sha256:<64 hex>)`
+      );
     }
     if (record.signingState === "unknown") {
       throw new ProductContentError(
@@ -524,6 +540,7 @@ export function getInstallActions(snapshot: ProductSnapshot): InstallAction[] {
       href: "/docs/getting-started/install/",
       kind: "source",
       notice: null,
+      warning: null,
     });
   }
   for (const distribution of snapshot.distributions) {
@@ -539,9 +556,12 @@ export function getInstallActions(snapshot: ProductSnapshot): InstallAction[] {
         label: distribution.label,
         href: distribution.assetUrl,
         kind: "download",
-        notice:
+        notice: null,
+        // An available-but-unsigned artifact is still a real download; the
+        // warning renders with its button rather than hiding it.
+        warning:
           distribution.signingState === "unsigned"
-            ? "This bundle is unsigned."
+            ? "This bundle is unsigned — Windows may warn before you run it."
             : null,
       });
     } else {
@@ -553,6 +573,7 @@ export function getInstallActions(snapshot: ProductSnapshot): InstallAction[] {
         notice:
           distribution.reason ??
           "Not yet published. See status for what exists in source today.",
+        warning: null,
       });
     }
   }

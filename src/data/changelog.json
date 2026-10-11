@@ -1,18 +1,42 @@
 [
   {
+    "date": "2026-10-07",
+    "category": "release",
+    "title": "v0.1.1 — unsigned Windows portable preview and CLI tarball published",
+    "summary": "GitHub release v0.1.1 publishes an unsigned Windows x64 portable preview (ZIP plus SHA256SUMS) and attaches an npm-format CLI tarball for transparency. Nothing is published to the npm registry, and no Setup.exe is attached; the supported install path remains clone + build.",
+    "revision": "ccf6aa9e67beeff81cf3604686c3ffcad1a86416",
+    "sourceUrl": "https://github.com/gthgomez/Babel/releases/tag/v0.1.1"
+  },
+  {
+    "date": "2026-10-07",
+    "category": "development",
+    "title": "Tag-triggered Windows portable bundle workflow merged (PR #312)",
+    "summary": "CI builds the unsigned Windows portable bundle for v* tags and opens a draft release; publishing is a separate owner action. This milestone alone publishes nothing.",
+    "revision": "8deb80c99a19f3d798babf421fe099396b9b982f",
+    "sourceUrl": "https://github.com/gthgomez/Babel/pull/312"
+  },
+  {
+    "date": "2026-10-07",
+    "category": "development",
+    "title": "Installer lifecycle qualification merged (PR #313)",
+    "summary": "An NSIS per-user Setup.exe builder and lifecycle harness land in CI. No Setup.exe is attached to published releases; the published preview is the portable ZIP, and no code signing exists.",
+    "revision": "eecad57cb116e6edc9309868e8db68b1d276c3ee",
+    "sourceUrl": "https://github.com/gthgomez/Babel/pull/313"
+  },
+  {
+    "date": "2026-10-04",
+    "category": "development",
+    "title": "Windows runtime and first-launch packaging merged (PR #306)",
+    "summary": "Desktop packaging work landed on main as a source milestone: at that point no public Desktop download or installer qualification existed yet. The v0.1.1 release later published an unsigned portable preview; installer qualification remains unpublished.",
+    "revision": "cf17c00da3c51678fd010ed645224686dcea94b0",
+    "sourceUrl": "https://github.com/gthgomez/Babel/pull/306"
+  },
+  {
     "date": "2026-07-23",
     "category": "release",
     "title": "v0.1.0 — first public pre-1.0 source release",
     "summary": "First public source tag of Babel. The release tag carries no downloadable assets; install remains clone + build.",
     "revision": "4629bd39d5996086d57fc24dc56e6bbf644fb788",
     "sourceUrl": "https://github.com/gthgomez/Babel/releases/tag/v0.1.0"
-  },
-  {
-    "date": "2026-10-04",
-    "category": "development",
-    "title": "Windows runtime and first-launch packaging merged (PR #306)",
-    "summary": "Desktop packaging work landed on main. This is a source milestone only: no public Desktop download or installer qualification exists yet.",
-    "revision": "cf17c00da3c51678fd010ed645224686dcea94b0",
-    "sourceUrl": "https://github.com/gthgomez/Babel/pull/306"
   }
 ]

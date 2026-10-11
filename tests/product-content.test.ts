@@ -10,7 +10,7 @@ import snapshot from "../src/data/product-status.json";
 import changelog from "../src/data/changelog.json";
 import { parseChangelogForTest } from "./helpers";
 
-const TODAY = "2026-10-06";
+const TODAY = "2026-10-11";
 
 const baseFeature = {
   id: "chat",
@@ -100,6 +100,75 @@ describe("source presence does not enable binary download", () => {
     const zip = getInstallActions(parsed).find((a) => a.label === "Windows portable");
     expect(zip?.href).toBe("/status/");
     expect(zip?.notice).toBe("Not published.");
+    expect(zip?.warning).toBeNull();
+  });
+});
+
+describe("available distributions stay honest", () => {
+  const validPortable = (): Record<string, unknown> => ({
+    id: "zip",
+    kind: "portable",
+    label: "Windows portable",
+    availability: "available",
+    version: "v0.1.1",
+    assetUrl:
+      "https://github.com/gthgomez/Babel/releases/download/v0.1.1/Babel-Desktop-0.1.1-win-x64.zip",
+    checksum: "sha256:" + "a".repeat(64),
+    signingState: "unsigned",
+    evidenceIds: ["e1"],
+  });
+
+  it("an available unsigned distribution is a real download with an unsigned warning", () => {
+    const snap = baseSnapshot();
+    (snap.distributions as unknown[]).push(validPortable());
+    const parsed = parseProductSnapshot(snap, { today: TODAY });
+    const action = getInstallActions(parsed).find((a) => a.label === "Windows portable");
+    // Regression: an unsigned-but-real asset must NOT be filtered out of the
+    // rendered links; it carries a warning instead of losing its button.
+    expect(action?.kind).toBe("download");
+    expect(action?.notice).toBeNull();
+    expect(action?.href).toBe(validPortable().assetUrl);
+    expect(action?.warning).toMatch(/unsigned/i);
+  });
+
+  it("an available signed distribution renders with no signing warning", () => {
+    const snap = baseSnapshot();
+    (snap.distributions as unknown[]).push({ ...validPortable(), signingState: "signed" });
+    const parsed = parseProductSnapshot(snap, { today: TODAY });
+    const action = getInstallActions(parsed).find((a) => a.label === "Windows portable");
+    expect(action?.notice).toBeNull();
+    expect(action?.href).toBe(validPortable().assetUrl);
+    expect(action?.warning).toBeNull();
+  });
+
+  it("an available download with unknown signing state is rejected", () => {
+    const snap = baseSnapshot();
+    (snap.distributions as unknown[]).push({ ...validPortable(), signingState: "unknown" });
+    expect(() => parseProductSnapshot(snap, { today: TODAY })).toThrow(/signing state/);
+  });
+
+  it("an available download without a checksum is rejected", () => {
+    const snap = baseSnapshot();
+    const dist = validPortable();
+    delete dist.checksum;
+    (snap.distributions as unknown[]).push(dist);
+    expect(() => parseProductSnapshot(snap, { today: TODAY })).toThrow(/checksum/);
+  });
+
+  it("an available download with a malformed checksum is rejected", () => {
+    const snap = baseSnapshot();
+    const dist = validPortable();
+    dist.checksum = "sha256:deadbeef";
+    (snap.distributions as unknown[]).push(dist);
+    expect(() => parseProductSnapshot(snap, { today: TODAY })).toThrow(/sha256/);
+  });
+
+  it("an available download without a public asset URL is rejected", () => {
+    const snap = baseSnapshot();
+    const dist = validPortable();
+    delete dist.assetUrl;
+    (snap.distributions as unknown[]).push(dist);
+    expect(() => parseProductSnapshot(snap, { today: TODAY })).toThrow(/assetUrl/);
   });
 });
 
@@ -143,7 +212,7 @@ describe("missing evidence is not verified", () => {
 describe("review date is not build date", () => {
   it("a future review date is rejected with an injected today", () => {
     const snap = baseSnapshot();
-    snap.reviewedAt = "2026-10-07";
+    snap.reviewedAt = "2026-10-12";
     expect(() => parseProductSnapshot(snap, { today: TODAY })).toThrow(/future/);
   });
 
