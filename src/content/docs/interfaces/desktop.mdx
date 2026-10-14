@@ -1,14 +1,14 @@
 ---
 title: Desktop
-description: The Electron Desktop shell — what the source provides, what the Windows portable preview includes, and what is explicitly unqualified.
+description: Install Babel Desktop, connect a project, configure a provider and models, and run the bundled CLI harness.
 slug: docs/interfaces/desktop
 pageType: reference
-sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
-reviewedAt: 2026-10-11
+sourceRevision: abc05bb482085d31bb71eb5a159dd3fa5f2c78ac
+reviewedAt: 2026-10-14
 interfaces:
   - Desktop
 prerequisites:
-  - Windows x64 (for the portable preview)
+  - Windows x64
 sourcePaths:
   - babel-desktop/README.md
   - babel-desktop/docs/INSTALL-WINDOWS.md
@@ -19,55 +19,73 @@ import DocsSourceNote from "../../../components/DocsSourceNote.astro";
 Babel Desktop is an Electron visual shell for the Babel Harness. The real
 work still runs the Babel CLI underneath; Desktop is the window around it.
 
-## Published portable preview (unsigned)
+## Install and set up
 
-The v0.1.1 GitHub release publishes the Windows x64 portable bundle as a real,
-checksummed asset — the builder pins Node 24.13.1 and Electron, verifies
-archive SHA256 values, and emits `BUILD.json` plus `SHA256SUMS`. It is
-**unsigned**: no code-signing identity, no SmartScreen reputation, no published
-`Setup.exe`/installer, and no automatic updater. Verify the ZIP's SHA256
-against the release's `SHA256SUMS` before running it. See
-[Get Babel](/download/) for the download, checksum, and the supported
-source-install path.
+Use [Get Babel](/download/) for the currently published Windows x64 assets
+and their SHA256 checksums. The per-user Setup.exe installs Babel Desktop,
+adds a Start Menu shortcut and an Installed apps uninstall entry, and stages
+upgrades with rollback. The portable ZIP is an alternative: extract the
+entire archive before opening **Babel Desktop.exe**.
 
-## The opening screen is a reference preview
+1. Open a project and start Docker Desktop with Linux containers for the default
+   `safe_repo` profile.
+2. In **Setup**, choose **Prepare recommended image**. Babel downloads a pinned
+   Linux amd64 image with shell, Git, Node 24 and npm, then verifies it. This may
+   take several minutes. For a custom toolchain, expand **Use an existing local
+   image** and choose **Validate and use image**. Other languages or project tools
+   may require a custom image. The exact verified image is saved for both Desktop
+   and **Babel Harness.cmd**.
+3. Open **Providers and models**, select your provider, and enter its API key.
+   Leave the key blank when keeping a saved credential. Local Ollama requires
+   a running local server and no cloud key.
+4. Enable the models you want available, choose a default, and save. Catalog
+   refresh shows routes qualified by the CLI; Ollama refresh discovers locally
+   installed models.
+5. Send a task in Chat. Desktop invokes the bundled CLI and displays its real
+   responses, tool activity, approvals and result. Plan and Deep currently
+   require OpenRouter; other providers offer Chat with an explanation.
 
-The initial reference session reproduces a supplied screenshot and is
-explicitly labeled **REFERENCE PREVIEW**. Its model names, file names,
-findings, tool results, and context numbers are fixtures — not facts about an
-actual Babel run. After you connect a project, a task runs the real CLI and
-the center panel shows that run.
+Desktop starts on an empty, connected harness workspace. It supplies no
+simulated conversation, file findings, tool results or context numbers.
 
 ## Bundled runtime and behavior
 
-The portable preview includes the Desktop shell, the authoritative CLI,
+The Windows bundle includes the Desktop shell, the authoritative CLI,
 immutable prompt assets, production dependencies, and a pinned Node runtime —
 no separate npm install needed. Setup notes:
 
-- Credentials are configured by you in a `.env` file in the configuration
-  directory shown in Setup. Desktop does not import credentials from other
-  apps or checkouts.
+- Provider setup saves credentials in a private plaintext `.env` under the
+  Desktop profile's `engine/config` directory by default. This is not an OS
+  keychain. Optional project storage requires explicit opt-in to an untracked,
+  Git-ignored destination. Existing process environment variables take
+  precedence. Desktop does not import credentials from other apps.
 - Desktop does not start Docker, change Windows policy, or switch to
   unrestricted host execution. The default `safe_repo` profile still applies.
+  A running Docker daemon alone is insufficient: Setup and run admission also
+  check the saved image's shell and Git execution. Image checks do not mount
+  your project or receive provider keys.
 - UI preferences live under `%APPDATA%\babel-north-star-desktop`; CLI state
-  lives under the bundle's `engine` directory. Nothing writes back to bundled
+  lives under that profile's `engine` directory. Nothing writes back to bundled
   resources.
 
 ## Explicitly unqualified
 
 Per the product's own installation notes:
 
-- No code-signing identity, SmartScreen reputation, automated updater,
-  Start Menu registration, or uninstaller.
+- No code-signing identity, SmartScreen reputation, or automatic updater.
 - Active model-task shutdown on quit is not qualified.
 - Cross-version profile migration is not qualified.
 
-Do not disable Windows security settings to run an unsigned preview.
+The app remains unsigned. Checksums verify bytes, not publisher identity.
+Do not disable Windows security settings to run it. Model calls require a
+working provider and can incur charges; credential presence does not prove
+authentication. A successful scoped test does not establish general coding
+reliability.
 
 <DocsSourceNote
   pageType="reference"
-  sourceRevision="ccf6aa9e67beeff81cf3604686c3ffcad1a86416"
-  reviewedAt="2026-10-11"
+  sourceRevision="abc05bb482085d31bb71eb5a159dd3fa5f2c78ac"
+  reviewedAt="2026-10-14"
   sourcePaths={["babel-desktop/README.md", "babel-desktop/docs/INSTALL-WINDOWS.md"]}
   interfaces={["Desktop"]}
   prerequisites={["Windows x64"]}

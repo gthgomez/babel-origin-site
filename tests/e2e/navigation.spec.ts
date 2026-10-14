@@ -86,5 +86,5 @@ test("browser Back and Forward restore navigation", async ({ page }) => {
   await page.goForward();
   await expect(page).toHaveURL(/\/download\/?$/);
   // The destination re-renders (not a blank history entry).
-  await expect(page.locator("main")).toContainText(/Install Babel from source/i);
+  await expect(page.locator("main")).toContainText(/Install Babel Desktop/i);
 });

@@ -3,8 +3,8 @@ title: Babel Docs
 description: Start here — choose installation, daily use, troubleshooting, or deeper concepts.
 slug: docs
 pageType: concept
-sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
-reviewedAt: 2026-10-11
+sourceRevision: abc05bb482085d31bb71eb5a159dd3fa5f2c78ac
+reviewedAt: 2026-10-14
 sourcePaths:
   - README.md
   - docs/STATUS.md
@@ -14,7 +14,7 @@ Babel is a local coding agent with inspectable instructions, explicit permission
 and visible verification results. This documentation is task-oriented: pick what
 you are trying to do.
 
-- **Install it** → [Install from source](/docs/getting-started/install/) (the supported path; an unsigned Windows portable preview is also published on [Get Babel](/download/))
+- **Install it** → [Windows Desktop downloads](/download/) or [build the CLI from source](/docs/getting-started/install/)
 - **First run** → [Quickstart](/docs/getting-started/quickstart/)
 - **Something is broken** → [Troubleshooting](/docs/getting-started/troubleshooting/)
 - **Daily use** → [Chat](/docs/using-babel/chat/), [Plan](/docs/using-babel/plan/), [Deep](/docs/using-babel/deep/)

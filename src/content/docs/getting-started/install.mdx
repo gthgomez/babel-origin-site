@@ -1,10 +1,10 @@
 ---
 title: Install Babel from source
-description: The supported installation path today is cloning the repository and building the CLI. There is no published npm package; the v0.1.1 GitHub release offers an unsigned Windows portable preview.
+description: Choose the Windows Desktop download or build the CLI from source. Babel has no published npm registry package.
 slug: docs/getting-started/install
 pageType: tutorial
-sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
-reviewedAt: 2026-10-11
+sourceRevision: abc05bb482085d31bb71eb5a159dd3fa5f2c78ac
+reviewedAt: 2026-10-14
 interfaces:
   - CLI
   - TUI
@@ -19,12 +19,12 @@ sourcePaths:
 
 import DocsSourceNote from "../../../components/DocsSourceNote.astro";
 
-Babel is **not published as an npm package**. The supported installation path is
-a source clone. Install commands that fetch a `babel`/`babel-harness` package
-from the npm registry are not Babel Harness. Separately, the v0.1.1 GitHub
-release publishes an **unsigned Windows x64 portable preview** — a real,
-checksummed asset that is not a signed or installer-qualified release. See
-[Desktop](/docs/interfaces/desktop/) for its exact scope.
+Babel is **not published as an npm package**. Windows users can choose the
+checksummed Desktop assets on [Get Babel](/download/); the bundle includes
+the CLI and its Node runtime. See [Desktop](/docs/interfaces/desktop/) for
+provider setup and distribution limits. For a source install, follow the
+steps below. Install commands that fetch a `babel`/`babel-harness` package
+from the npm registry are not Babel Harness.
 
 ## 1. Clone and build
 
@@ -65,12 +65,12 @@ the install. Exit zero is not the only legitimate documented outcome.
 
 ## 3. What about Desktop?
 
-A Windows x64 portable preview (Desktop shell plus the authoritative CLI) is
-published as an **unsigned** asset in the v0.1.1 GitHub release, with the ZIP's
-SHA256 published in `SHA256SUMS`. There is **no published Setup.exe**, no code
-signing, and no automatic updater. Verify the checksum before running it. See
-[Desktop](/docs/interfaces/desktop/) for what exists and what is explicitly
-unqualified.
+The Windows x64 bundle includes Desktop and the authoritative CLI. Use the
+currently available Setup.exe or portable ZIP listed on [Get Babel](/download/)
+and verify its SHA256 before running it. Setup installs for the current user
+and adds a Start Menu shortcut and uninstall entry. Packages remain unsigned,
+and automatic in-place updates are unavailable. See
+[Desktop](/docs/interfaces/desktop/) for setup and qualification limits.
 
 ## Requirements recap
 
@@ -83,8 +83,8 @@ unqualified.
 
 <DocsSourceNote
   pageType="tutorial"
-  sourceRevision="ccf6aa9e67beeff81cf3604686c3ffcad1a86416"
-  reviewedAt="2026-10-11"
+  sourceRevision="abc05bb482085d31bb71eb5a159dd3fa5f2c78ac"
+  reviewedAt="2026-10-14"
   sourcePaths={["README.md", "docs/CLI_QUICKSTART.md", "babel-cli/package.json"]}
   interfaces={["CLI", "TUI"]}
   prerequisites={["Git", "Node.js 22.19+ / 24.13.1+"]}

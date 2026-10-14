@@ -1,9 +1,17 @@
 [
   {
+    "date": "2026-10-14",
+    "category": "release",
+    "title": "v0.1.3 — Windows installer and CLI-backed Desktop",
+    "summary": "Windows Setup.exe bundles the Babel CLI and Node runtime. Desktop supports provider keys, enabled/default models and verified Docker sandbox preparation. Published bytes, installer lifecycle and native UI were checked; the Windows packages are unsigned.",
+    "revision": "abc05bb482085d31bb71eb5a159dd3fa5f2c78ac",
+    "sourceUrl": "https://github.com/gthgomez/Babel/releases/tag/v0.1.3"
+  },
+  {
     "date": "2026-10-07",
     "category": "release",
     "title": "v0.1.1 — unsigned Windows portable preview and CLI tarball published",
-    "summary": "GitHub release v0.1.1 publishes an unsigned Windows x64 portable preview (ZIP plus SHA256SUMS) and attaches an npm-format CLI tarball for transparency. Nothing is published to the npm registry, and no Setup.exe is attached; the supported install path remains clone + build.",
+    "summary": "GitHub release v0.1.1 publishes an unsigned Windows x64 portable preview (ZIP plus SHA256SUMS) and attaches an npm-format CLI tarball for transparency. That release did not publish an npm registry package or attach a Setup.exe; the source installation path was clone + build.",
     "revision": "ccf6aa9e67beeff81cf3604686c3ffcad1a86416",
     "sourceUrl": "https://github.com/gthgomez/Babel/releases/tag/v0.1.1"
   },
@@ -19,7 +27,7 @@
     "date": "2026-10-07",
     "category": "development",
     "title": "Installer lifecycle qualification merged (PR #313)",
-    "summary": "An NSIS per-user Setup.exe builder and lifecycle harness land in CI. No Setup.exe is attached to published releases; the published preview is the portable ZIP, and no code signing exists.",
+    "summary": "An NSIS per-user Setup.exe builder and lifecycle harness land in CI. At that milestone no Setup.exe was attached to a release; the published preview was the portable ZIP, with no code signing.",
     "revision": "eecad57cb116e6edc9309868e8db68b1d276c3ee",
     "sourceUrl": "https://github.com/gthgomez/Babel/pull/313"
   },
@@ -27,7 +35,7 @@
     "date": "2026-10-04",
     "category": "development",
     "title": "Windows runtime and first-launch packaging merged (PR #306)",
-    "summary": "Desktop packaging work landed on main as a source milestone: at that point no public Desktop download or installer qualification existed yet. The v0.1.1 release later published an unsigned portable preview; installer qualification remains unpublished.",
+    "summary": "Desktop packaging work landed on main as a source milestone: at that point no public Desktop download or installer qualification existed yet. The v0.1.1 release later published an unsigned portable preview; that release did not publish an installer.",
     "revision": "cf17c00da3c51678fd010ed645224686dcea94b0",
     "sourceUrl": "https://github.com/gthgomez/Babel/pull/306"
   },

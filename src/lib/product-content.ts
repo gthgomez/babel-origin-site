@@ -577,7 +577,8 @@ export function getInstallActions(snapshot: ProductSnapshot): InstallAction[] {
       });
     }
   }
-  // A verified source path is always offered first when it exists.
+  const installer = snapshot.distributions.find(d => d.id === "desktop-windows-setup" && d.availability === "available");
+  if (installer?.assetUrl) actions.sort((a,b) => Number(b.href === installer.assetUrl) - Number(a.href === installer.assetUrl));
   return actions;
 }
 

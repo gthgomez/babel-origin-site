@@ -3,17 +3,20 @@ title: Models and providers
 description: How Babel discovers provider credentials, which providers are documented, and what stays local.
 slug: docs/configuration/models-and-providers
 pageType: guide
-sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
-reviewedAt: 2026-10-11
+sourceRevision: abc05bb482085d31bb71eb5a159dd3fa5f2c78ac
+reviewedAt: 2026-10-14
 interfaces:
   - CLI
   - TUI
+  - Desktop
 prerequisites:
-  - Install from source
+  - Install Babel
 sourcePaths:
   - babel-cli/.env.example
   - docs/CLI_QUICKSTART.md
   - babel-cli/src/config/executionProfiles.ts
+  - babel-desktop/README.md
+  - babel-desktop/native/provider-routing.mjs
 ---
 
 import DocsSourceNote from "../../../components/DocsSourceNote.astro";
@@ -23,25 +26,38 @@ include model inference and does not host your credentials.
 
 ## Where credentials live
 
-- `babel-cli/.env` — a local file you create from `babel-cli/.env.example`.
-  Keep values out of source control.
-- **Shell/CI environment variables take precedence** over that file.
+- Desktop: use **Providers and models** to save a key in the private Desktop
+  profile's `engine/config/.env` by default. This plaintext file is not an OS
+  keychain. Project storage is an explicit opt-in requiring an untracked,
+  Git-ignored `.env` in the selected project.
+- Source CLI: create `~/.babel/config/.env` (Windows:
+  `%USERPROFILE%\.babel\config\.env`) using the blank example configuration.
+  On macOS/Linux, restrict it with `chmod 600 ~/.babel/config/.env`.
+  `BABEL_CONFIG_DIR` selects an explicit configuration directory.
+- **Shell/CI environment variables take precedence**. The old
+  `babel-cli/.env` path requires `BABEL_LEGACY_CLI_ENV=1` compatibility opt-in.
 
 Never commit a populated `.env`, paste keys into chat, or share the file.
 
 ## Documented providers
 
-Per the product's example configuration and quickstart:
+Desktop offers qualified routes for **OpenRouter**, **DeepSeek**,
+**DeepInfra**, **OpenCode Go**, and local **Ollama**. A provider's public
+catalog does not mean every listed model is qualified by the harness.
 
-- **DeepSeek** — required for typical live provider-backed runs
-  (`DEEPSEEK_API_KEY`).
-- Other keys in `.env.example` are optional (legacy/offline compatibility).
-- **Ollama** — a local, credential-free route
-  (`BABEL_OLLAMA_BASE_URL`, default `http://localhost:11434/v1`).
-- **OpenCode Zen** — optional route (`BABEL_OPENCODE_BASE_URL`).
+In **Providers and models**, select your provider, enter its key, enable
+the models you want available, and choose a default. Leave the key blank to
+retain a saved credential. Refresh checks qualified public catalog entries;
+Ollama refresh discovers installed local models and requires no cloud key.
+Desktop Ollama requests stay on `http://127.0.0.1:11434/v1`.
 
-Model selection inside a session uses `/model`. The prompt stack's model
-adapter is selected by the configured model-policy waterfall.
+The selected provider and enabled model govern Desktop runs, including
+auxiliary model calls. An unavailable or disabled route produces an error;
+it does not silently switch provider. Plan and Deep currently require
+OpenRouter. Other providers offer Chat with a clear explanation.
+
+Source CLI sessions also support `/model`. See the CLI model-policy
+configuration for source-only routes and advanced settings.
 
 ## Verify a provider
 
@@ -61,9 +77,9 @@ node .\babel-cli\dist\index.js models ping --json
 
 <DocsSourceNote
   pageType="guide"
-  sourceRevision="ccf6aa9e67beeff81cf3604686c3ffcad1a86416"
-  reviewedAt="2026-10-11"
-  sourcePaths={["babel-cli/.env.example", "docs/CLI_QUICKSTART.md"]}
-  interfaces={["CLI", "TUI"]}
-  prerequisites={["Install from source"]}
+  sourceRevision="abc05bb482085d31bb71eb5a159dd3fa5f2c78ac"
+  reviewedAt="2026-10-14"
+  sourcePaths={["babel-cli/.env.example", "docs/CLI_QUICKSTART.md", "babel-desktop/README.md", "babel-desktop/native/provider-routing.mjs"]}
+  interfaces={["CLI", "TUI", "Desktop"]}
+  prerequisites={["Install Babel"]}
 />

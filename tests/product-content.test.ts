@@ -53,7 +53,7 @@ const baseSnapshot = (): Record<string, unknown> => ({
 
 describe("parseProductSnapshot (seeded data)", () => {
   it("accepts the committed product snapshot", () => {
-    const parsed = parseProductSnapshot(snapshot, { today: TODAY });
+    const parsed = parseProductSnapshot(snapshot, { today: "2026-10-14" });
     expect(parsed.features.length).toBeGreaterThan(0);
     expect(parsed.distributions.find((d) => d.kind === "npm")?.availability).toBe(
       "not_available"
@@ -105,6 +105,20 @@ describe("source presence does not enable binary download", () => {
 });
 
 describe("available distributions stay honest", () => {
+  it("offers a verified installer before source while retaining its unsigned disclosure", () => {
+    const snap = baseSnapshot();
+    (snap.distributions as unknown[]).push({
+      id: "desktop-windows-setup", kind: "installer", label: "Windows Setup.exe installer",
+      availability: "available", version: "v0.1.2", revision: "cf17c00da3c51678fd010ed645224686dcea94b0",
+      assetUrl: "https://github.com/gthgomez/Babel/releases/download/v0.1.2/Babel-Desktop-Setup-0.1.2-win-x64.exe",
+      checksum: "sha256:" + "a".repeat(64), signingState: "unsigned", evidenceIds: ["e1"],
+    });
+    const actions = getInstallActions(parseProductSnapshot(snap, {today: TODAY}));
+    expect(actions[0]?.label).toBe("Windows Setup.exe installer");
+    expect(actions[0]?.notice).toBeNull();
+    expect(actions[0]?.warning).toMatch(/unsigned/);
+    expect(actions.some(action => action.kind === "source")).toBe(true);
+  });
   const validPortable = (): Record<string, unknown> => ({
     id: "zip",
     kind: "portable",

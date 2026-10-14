@@ -3,8 +3,8 @@ title: Deep
 description: A higher-ceremony governed pipeline with adversarial review and execution structure — with explicit limitations.
 slug: docs/using-babel/deep
 pageType: guide
-sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
-reviewedAt: 2026-10-11
+sourceRevision: abc05bb482085d31bb71eb5a159dd3fa5f2c78ac
+reviewedAt: 2026-10-14
 interfaces:
   - CLI
 prerequisites:
@@ -18,8 +18,10 @@ sourcePaths:
 import DocsSourceNote from "../../../components/DocsSourceNote.astro";
 
 Deep mode is Babel's higher-ceremony path: it loads the governed pipeline
-(OLS v9), an adversarial QA reviewer, and the CLI executor with verification
-gates.
+(OLS v9) and the CLI executor with verification gates. Independent adversarial
+QA is optional; Desktop requires a different enabled model on the same
+provider when it is selected. Desktop Plan and Deep currently require
+OpenRouter.
 
 ```powershell
 node .\babel-cli\dist\index.js deep "Harden the migration path and verify it"
@@ -53,8 +55,8 @@ Otherwise start with [Chat](/docs/using-babel/chat/) or
 
 <DocsSourceNote
   pageType="guide"
-  sourceRevision="ccf6aa9e67beeff81cf3604686c3ffcad1a86416"
-  reviewedAt="2026-10-11"
+  sourceRevision="abc05bb482085d31bb71eb5a159dd3fa5f2c78ac"
+  reviewedAt="2026-10-14"
   sourcePaths={["docs/CHAT_MODE.md", "docs/STATUS.md"]}
   interfaces={["CLI"]}
   prerequisites={["Quickstart"]}

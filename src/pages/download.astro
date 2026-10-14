@@ -6,6 +6,7 @@ import snapshotData from "../data/product-status.json";
 
 const snapshot = parseProductSnapshot(snapshotData);
 const others = snapshot.distributions.filter((d) => d.kind !== "source");
+const installer = others.find(d => d.id === "desktop-windows-setup" && d.availability === "available");
 const AVAILABILITY: Record<string, string> = {
   available: "Available",
   not_available: "Not available",
@@ -14,22 +15,17 @@ const AVAILABILITY: Record<string, string> = {
 ---
 <MarketingLayout
   title="Get Babel — download"
-  description="Install Babel from source. There is no published npm package; the v0.1.1 GitHub release offers an unsigned Windows portable preview. Here is the supported path and the honest state of everything else."
+  description="Download Babel for Windows or build from source. Published assets include version, checksum, and signing status."
   canonicalPath="/download"
 >
   <section class="hero">
     <div class="hero-copy">
       <p class="eyebrow">Get Babel</p>
-      <h1>Install Babel from source.</h1>
-      <p class="lede">
-        The supported installation path today is a source clone and build.
-        There is <strong>no published npm package</strong>. The v0.1.1 GitHub
-        release also publishes an <strong>unsigned</strong> Windows portable
-        preview — a real asset with a disclosed checksum, but not a signed or
-        installer-qualified release. Everything on this page says exactly what
-        exists and what does not.
-      </p>
+      <h1>{installer ? "Install Babel Desktop." : "Install Babel from source."}</h1>
+      {installer ? <p class="lede">Download the Windows installer, run setup, open a project, and choose your provider and models. The installer includes the Babel CLI and Node runtime. Start Docker Desktop before running tasks.</p> : <p class="lede">Build Babel from source, or use an available Windows portable package listed below. Each published download includes its exact version, checksum and signing status.</p>}
       <InstallActions snapshot={snapshot} />
+      <p class="fine-print">Babel has no published npm package. Use a published download below or build from source.</p>
+      {installer && <p><a href="/docs/interfaces/desktop/">Desktop setup guide</a> · Cloud providers require your API key and may charge for tasks.</p>}
     </div>
   </section>
 
@@ -62,7 +58,7 @@ node ./babel-cli/dist/index.js doctor</code></pre>
           <h3>{dist.label}</h3>
           {dist.version && <p><code>{dist.version}</code></p>}
           {dist.availability === "available" && dist.assetUrl && (
-            <p><a href={dist.assetUrl}>Download from the v0.1.1 GitHub release</a></p>
+            <p><a href={dist.assetUrl}>Download {dist.version ?? "published asset"} from GitHub</a></p>
           )}
           {dist.availability === "available" && dist.checksum && (
             <p class="checksum"><strong>Checksum:</strong> <code>{dist.checksum}</code></p>
@@ -77,8 +73,9 @@ node ./babel-cli/dist/index.js doctor</code></pre>
     <p>
       See <a href="/status/">status</a> for the evidence behind each record.
       An available binary distribution is a real GitHub-hosted asset with a
-      disclosed checksum; for the unsigned Windows preview, verify the SHA256
-      against the release's <code>SHA256SUMS</code> before running it.
+      disclosed checksum; for an unsigned Windows package, verify the SHA256
+      against the matching release checksum file before running it:
+      <code>.exe.sha256</code> for Setup.exe or <code>SHA256SUMS</code> for the ZIP.
     </p>
   </section>
 </MarketingLayout>
