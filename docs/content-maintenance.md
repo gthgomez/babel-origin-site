@@ -3,7 +3,7 @@
 ## The pinned snapshot model
 
 All product claims on this site derive from `src/data/product-status.json`,
-which pins one Babel revision and one human review date
+which pins one Babel revision and one disclosed content review date
 (`reviewedAt`). Guides additionally pin `sourceRevision` in their frontmatter.
 
 - A build never updates `reviewedAt` or the pinned revision automatically.

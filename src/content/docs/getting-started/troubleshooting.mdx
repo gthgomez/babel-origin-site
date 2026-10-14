@@ -3,8 +3,8 @@ title: Troubleshooting
 description: Missing runtime, missing provider, blocked execution, and where to look when a session does not go as expected.
 slug: docs/getting-started/troubleshooting
 pageType: guide
-sourceRevision: ccf6aa9e67beeff81cf3604686c3ffcad1a86416
-reviewedAt: 2026-10-11
+sourceRevision: abc05bb482085d31bb71eb5a159dd3fa5f2c78ac
+reviewedAt: 2026-10-14
 interfaces:
   - CLI
   - TUI
@@ -38,19 +38,31 @@ line**. Check `node --version` and `babel-cli/package.json` `engines`.
 
 ### Model session fails to start
 
-- No provider credential: set only the providers you use in
-  `babel-cli/.env` or your shell environment. Shell/CI variables take
-  precedence over the file.
-- Wrong provider for the route: live provider-backed runs typically need
-  `DEEPSEEK_API_KEY`; other keys in the example file are optional. Verify with
+- No provider credential: use Desktop **Providers and models**, the private
+  CLI profile (`~/.babel/config/.env`), or your shell environment. Shell/CI
+  variables take precedence. The old checkout-local `babel-cli/.env` is
+  loaded only with explicit `BABEL_LEGACY_CLI_ENV=1` compatibility opt-in.
+- Wrong provider for the route: choose the provider whose credential you
+  configured, enable a qualified model, and save it as the default. A saved
+  key's presence does not prove authentication. Verify source CLI setup with
   `node .\babel-cli\dist\index.js models ping --json` (requires a configured
   provider).
+- Read the actual provider error: invalid credentials, insufficient balance,
+  inaccessible models and provider outages require different fixes. Desktop
+  retains the error instead of substituting another provider. Plan and Deep
+  currently require OpenRouter; select Chat for other Desktop providers.
 
 ### Execution blocked / "fail-closed" without Docker
 
 This is expected behavior, not a bug to route around. The default `safe_repo`
 profile requires Docker isolation and a configured sandbox image
 (`BABEL_BENCHMARK_DOCKER_IMAGE`). Without them, shell execution fails closed.
+
+In Desktop **Setup**, start Docker Desktop with Linux containers, then choose
+**Prepare recommended image** or validate an existing local image. Recheck setup
+after repairing Docker or restoring a removed image. Desktop and its installed
+CLI launcher share the verified image setting. Custom images must include the
+tools your project tests need; the recommended image provides Git, Node and npm.
 
 Your options, in order of preference:
 
@@ -85,8 +97,8 @@ session, or `node .\babel-cli\dist\index.js undo` from the CLI.
 
 <DocsSourceNote
   pageType="guide"
-  sourceRevision="ccf6aa9e67beeff81cf3604686c3ffcad1a86416"
-  reviewedAt="2026-10-11"
+  sourceRevision="abc05bb482085d31bb71eb5a159dd3fa5f2c78ac"
+  reviewedAt="2026-10-14"
   sourcePaths={["docs/CLI_QUICKSTART.md", "babel-cli/src/config/executionProfiles.ts", "babel-cli/src/config/benchmarkContainer.ts"]}
   interfaces={["CLI", "TUI"]}
   prerequisites={["Quickstart"]}

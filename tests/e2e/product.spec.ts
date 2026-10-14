@@ -45,10 +45,9 @@ test.describe("homepage product assertions", () => {
       const feature = snapshot.features.find((f: { id: string }) => f.id === id);
       await expect(section).toContainText(feature.label);
     }
-    // The desktop card must not read as a signed release; it is an unsigned
-    // published preview.
-    const desktopCard = section.locator(".card", { hasText: "Desktop shell" });
-    await expect(desktopCard).toContainText("Preview");
+    // Released Desktop retains its unsigned package disclosure.
+    const desktopCard = section.locator(".card", { hasText: "Desktop harness" });
+    await expect(desktopCard.locator(".status-pill")).toHaveText("Released");
     await expect(desktopCard).toContainText(/unsigned/i);
     const source = section.getByRole("link", { name: "product source" });
     await expect(source).toHaveAttribute(

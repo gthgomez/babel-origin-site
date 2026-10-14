@@ -12,15 +12,16 @@ interface Props {
   snapshot: ProductSnapshot;
 }
 
-const { snapshot } = Astro.props;
+const { snapshot } = Astro.props as Props;
 const actions = getInstallActions(snapshot);
 const links = actions.filter((a) => a.notice === null);
 const notices = actions.filter((a) => a.notice !== null);
+const installer = snapshot.distributions.find(d => d.id === "desktop-windows-setup" && d.availability === "available");
 ---
 <div class="actions" aria-label="Install Babel">
   {links.map((action) => (
     <div class="action">
-      <a class={`button ${action.kind === "source" ? "primary" : "secondary"}`} href={action.href}>
+      <a class={`button ${(installer ? action.href === installer.assetUrl : action.kind === "source") ? "primary" : "secondary"}`} href={action.href}>
         {action.label}
       </a>
       {action.warning && <p class="action-warning">{action.warning}</p>}
